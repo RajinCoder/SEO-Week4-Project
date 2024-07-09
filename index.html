@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Input Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>FUREVER HOME</h2>
+    <form id="inputForm">
+        <label for="question1">Question 1:</label>
+        <input type="text" id="question1" name="question1" required>
+        
+        <label for="question2">Question 2:</label>
+        <input type="text" id="question2" name="question2" required>
+        
+        <label for="question3">Question 3:</label>
+        <textarea id="question3" name="question3" rows="4" required></textarea>
+        
+        <button type="submit">Find Your Dog</button>
+    </form>
+
+    <script>
+        document.getElementById('inputForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let formData = {
+                question1: document.getElementById('question1').value,
+                question2: document.getElementById('question2').value,
+                question3: document.getElementById('question3').value
+
+            };
+
+
+            fetch('/store-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Data submitted successfully!');
+                    document.getElementById('inputForm').reset(); 
+                } else {
+                    alert('Error submitting data.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting data.');
+            });
+        });
+    </script>
+</body>
+</html>
