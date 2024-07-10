@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from petfinder import api_query_response, chosen_post_data
 
 app = Flask(__name__)
 
