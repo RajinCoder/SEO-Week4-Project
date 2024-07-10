@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FUREVER HOME</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h2>FUREVER HOME</h2>
+    <div class="title-container">
+        <img src="{{ url_for('static', filename='dog-house.png') }}" alt="Dog house" class="title-image">
+        <h2>FUREVER HOME</h2>
+        <img src="{{ url_for('static', filename='bone.png') }}" alt="Bone" class="title-image">
+    </div>
     <form id="inputForm">
         <label for="question1">Question 1:</label>
         <input type="text" id="question1" name="question1" required>
@@ -31,7 +35,7 @@
                 question3: document.getElementById('question3').value
             };
 
-            fetch('/store-data', {
+            fetch('/submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
