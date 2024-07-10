@@ -4,26 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FUREVER HOME</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <div class="title-container">
-        <img src="{{ url_for('static', filename='dog-house.png') }}" alt="Dog house" class="title-image">
+        <img src="static/pawprint.png" alt="Dog house" class="title-image">
+        <img src="static/dog-house.png" alt="Dog house" class="title-image">
         <h2>FUREVER HOME</h2>
-        <img src="{{ url_for('static', filename='bone.png') }}" alt="Bone" class="title-image">
+        <img src="static/bone.png" alt="Bone" class="title-image">
+        <img src="static/bone-rotate.png" alt="Dog house" class="title-image">
     </div>
     <form id="inputForm">
-        <label for="question1">Question 1:</label>
+        <label for="question1">What size dog are you looking for?</label>
         <input type="text" id="question1" name="question1" required>
         
-        <label for="question2">Question 2:</label>
+        <label for="question2">What age dog are you looking for?</label>
         <input type="text" id="question2" name="question2" required>
         
-        <label for="question3">Question 3:</label>
+        <label for="question3">Where are you located?</label>
         <input type="text" id="question3" name="question3" required>
+
+        <label for="question4">How far (in miles) are you willing to travel to retrive your dog?</label>
+        <input type="text" id="question3" name="question4" required>
+
+        <label for="question5">Do you have the ability to care for a specially-abled dog?</label>
+        <input type="text" id="question3" name="question5" required>
         
         <button type="submit">Find Your Dog</button>
     </form>
+
 
     <script>
         document.getElementById('inputForm').addEventListener('submit', function(event) {
