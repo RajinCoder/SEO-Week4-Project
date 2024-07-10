@@ -67,3 +67,4 @@ def chosen_post_data(pet_id):
   else:
     return chosen_pet_dictionary
 
+print(api_query_response('orlando', '100', 'm', 'young', False))
