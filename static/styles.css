@@ -41,20 +41,36 @@ label {
 input[type="text"],
 textarea {
     width: 100%;
-    padding: 8px;
+    padding: 12px;
     margin-bottom: 10px;
     box-sizing: border-box;
-    font-size: 1.2em;
+    font-size: 1.2em; 
+    border: 2px solid #f7a80f; 
+    border-radius: 5px; 
+    background-color: #fff7e6; 
+    color: #f7a80f; 
+    outline: none; 
+    transition: all 0.3s ease-in-out; 
 }
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #f7a80f;
+    box-shadow: 0 0 5px rgba(247, 168, 15, 0.5);
+}
+
 
 button {
     font-family: "Jua", sans-serif;
-    padding: 10px 20px;
+    padding: 15px 30px; 
     background-color: white;
     color: #f7a80f;
     border: 2px solid #f7a80f;
     cursor: pointer;
-    font-size: 1.2em; 
+    font-size: 1.5em; 
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    margin-top: 10px;
 }
 
 button:hover {
