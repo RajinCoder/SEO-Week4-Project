@@ -51,7 +51,10 @@ def api_query_response(city_or_zip, geo_range, sex, age, special_needs):
       resulting_pets.append(resulting_pets_dictionary)
   finally:
     return resulting_pets
-      
+
+"""
+ Returns data about a specific dog by their pet_id
+"""      
 def chosen_post_data(pet_id):
   url = f'{base_url}limited_pet_details?key={api_key}&v=3&output=json'
   params = {'pet_id': pet_id}
