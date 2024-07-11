@@ -2,7 +2,7 @@
 {% block content %}
 <div class="pet-body">
     <div class="header">
-        <a style="text-decoration: none; color: #f7a80f;" href="{{ request.url_root }}proxy/5000/" >
+        <a style="text-decoration: none; color: #f7a80f;" href="{{ request.url_root }}" >
             <h1>FUREVER HOME</h1>
         </a>
         <img src="static/pawprint.png" alt="Pawprint" class="img-title">
@@ -16,7 +16,7 @@
                 <p>Secondary Breed: {{ post.secondary_breed }}</p>
                 <p>Gender: {{ post.sex }}</p>
                 <p>Age: {{ post.age }}</p>
-                <a href="{{ request.url_root }}proxy/5000/post/{{ post.pet_id }}" class="details-button">Details</a>
+                <a href="{{ request.url_root }}/post/{{ post.pet_id }}" class="details-button">Details</a>
             </div>
         {% endfor %}
     </div>

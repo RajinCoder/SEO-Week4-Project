@@ -1,24 +1,47 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="post-body">
+<div class="pet-body">
     <div class="header">
-        <a style="text-decoration: none; color: #f7a80f;" href="{{ request.url_root }}proxy/5000/" >
+        <a style="text-decoration: none; color: #f7a80f;" href="{{ request.url_root }}" >
             <h1>FUREVER HOME</h1>
         </a>
-        <img src="static/pawprint.png" alt="Pawprint" class="img-title">
+        <img src="{{ url_for('static', filename='pawprint.png') }}" alt="Pawprint" class="img-title">
     </div>
     <div class="post-details box">
-        <img src="{{ post.images[0].thumbnail_url }}" alt="Dog Image">
-        <p>Name: {{ post.pet_name }}</p>
-        <p>Size: {{ post.size }}</p>
-        <p>Sex: {{ post.sex }}</p>
-        <p>Age: {{ post.age }}</p>
-        <p>Location: {{ post.addr_city }}, {{ post.addr_state_code }}</p>
-        <p>Primary Breed: {{ post.primary_breed }}</p>
-        <p>Secondary Breed: {{ post.secondary_breed }}</p>
-        <p>Special Needs: {{ post.special_needs }}</p>
-        <p>Act Quickly: {{ post.act_quickly }}</p>
-        <a href="{{post.pet_details_url}}" class="details-button">Details</a>
+        <div class="post-details-head">
+            <img src="{{ post.images[0].thumbnail_url }}" alt="Dog Image">
+            <div style="display: flex; align-items: center; width: 30%;">
+                {% if post.status == 'available'%}
+                    <a href="{{post.pet_details_url}}" target="_blank" class="avail-button">Available</a>
+                {% else %}
+                    <a href="{{post.pet_details_url}}" target="_blank" class="avail-button">Not Available</a>
+                {% endif %}
+                {% if post.act_quickly == 1 %}
+                <img src="{{ url_for('static', filename='warning.png') }}" alt="Warning">
+                {% endif %}
+            </div>
+            
+        </div>
+        <div class="post-details-body">
+            <div style="display: flex; flex-direction: column;">
+                <p>Name: {{ post.pet_name }}</p>
+                <p>Size: {{ post.size }}</p>
+                <p>Sex: {{ post.sex }}</p>
+                <p>Age: {{ post.age }}</p>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <p>Location: {{ post.addr_city }}, {{ post.addr_state_code }}</p>
+                <p>Primary Breed: {{ post.primary_breed }}</p>
+                <p>Secondary Breed: {{ post.secondary_breed }}</p>
+                {% if post.special_needs == 1 %}
+                    <p>Has Special Needs</p>
+                {% else %}
+                    <p>Does not have Special Needs</p>
+                {% endif %}
+
+                
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}
