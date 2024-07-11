@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
-body {
+.body {
     
     font-family: "Jua", sans-serif;
     font-weight: 400;
@@ -23,6 +23,70 @@ h2 {
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+}
+
+.post-body{
+    font-family: "Jua", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: red;
+}
+.pet-body {
+    font-family: "Jua", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.header {
+    display: flex;
+    align-items: center; /* Align items to the center of the container */
+    margin-bottom: 20px;
+    color: #f7a80f;
+    padding: 5px;
+}
+
+.posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.post {
+    width: 20vw;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #f7a80f;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F6F6F6;
+}
+
+.post img {
+    width: 100%; /* Make the image take up the full width of the post box */
+    height: 200px; /* Set a fixed height for uniformity */
+    object-fit: cover; /* Ensure the image covers the entire area while maintaining aspect ratio */
+}
+
+.img-title {
+    height: 100%; /* Make the image take up the full height of the flex container */
+    max-height: 50px; /* Optionally set a max height if needed */
+    margin-left: 10px;
+}
+
+.details-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #f7a80f;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.details-button:hover {
+    background-color: #e6950e;
 }
 
 .title-image {

@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FUREVER HOME</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="static/styles/styles.css">
 </head>
-<body>
+<body class="body">
     <div class="title-container">
         <img src="static/pawprint.png" alt="Dog house" class="title-image">
         <img src="static/dog-house.png" alt="Dog house" class="title-image">
@@ -94,25 +94,39 @@
             };
             console.log(formData);
 
-            fetch('/submit', {
+            fetch('http://127.0.0.1:5000/submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => {
-                if (response.ok) {
-                    alert('Data submitted successfully!');
-                    document.getElementById('inputForm').reset(); 
-                } else {
-                    alert('Error submitting data.');
-                }
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.error('Error:', error);
-                alert('Error submitting data.');
             });
+            // fetch('https://127.0.0.1:5000/submit', {  // Ensure this matches your backend URL
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(formData)
+            // })
+            // .then(response => {
+            //     if (response.ok) {
+            //         alert('Data submitted successfully!');
+            //         document.getElementById('inputForm').reset(); 
+            //     } else {
+            //         alert('Error submitting data. response');
+            //     }
+            // })
+            // .catch(error => {
+            //     console.error('Error:', error);
+            //     alert('Error submitting data.');
+            // });
         });
     </script>
 </body>

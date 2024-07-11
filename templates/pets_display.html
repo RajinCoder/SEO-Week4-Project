@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="pet-body">
+    <div class="header">
+        <a style="text-decoration: none; color: #f7a80f;" href="{{ request.url_root }}proxy/5000/" >
+            <h1>FUREVER HOME</h1>
+        </a>
+        <img src="static/pawprint.png" alt="Pawprint" class="img-title">
+    </div>
+    <div class="posts box">
+        {% for post in posts %}
+            <div class="post">
+                <img src="{{ post.photo_link }}" alt="Dog Image">
+                <p>Name: {{ post.pet_name }}</p>
+                <p>Primary Breed: {{ post.primary_breed }}</p>
+                <p>Secondary Breed: {{ post.secondary_breed }}</p>
+                <p>Gender: {{ post.sex }}</p>
+                <p>Age: {{ post.age }}</p>
+                <a href="{{ request.url_root }}proxy/5000/post/{{ post.pet_id }}" class="details-button">Details</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
