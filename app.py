@@ -17,22 +17,28 @@ bcrypt = Bcrypt(app)
 
 app.secret_key = os.urandom(24)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 with app.app_context():
     db.create_all()
 
 @app.route('/')
-@login_required
 def index():
-    return render_template('index.html')
+    if current_user.is_authenticated:
+        return render_template('index.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/submit', methods=['POST'])
 @cross_origin()
+@login_required
 def submit():
     if request.is_json:
         data = request.get_json()
         posts = api_query_response(data['location'], data['geo_range'], data['sex'], data['age'], data['special_ability'])
-        if not posts:  # Check if no posts were found
+        if not posts:
             return jsonify({'redirect': url_for("error")}), 200
         session['posts'] = posts
         return jsonify({'redirect': url_for("pets_display")}), 200
@@ -40,13 +46,15 @@ def submit():
         return jsonify({'message': 'Invalid data format.'}), 400
 
 @app.route('/pets')
+@login_required
 def pets_display():
     posts = session.get('posts', [])
-    if not posts:  # Check if no posts were found
+    if not posts: 
         return render_template('error.html')
     return render_template('pets_display.html', posts=posts)
 
 @app.route('/post/<int:pet_id>')
+@login_required
 def post_details(pet_id):
     post = chosen_post_data(pet_id)
     if post:
@@ -55,6 +63,7 @@ def post_details(pet_id):
         return render_template('error.html')
 
 @app.route('/error')
+@login_required
 def error():
     return render_template('error.html')
 
