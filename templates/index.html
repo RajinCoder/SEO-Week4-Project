@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FUREVER HOME</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="static/styles/styles.css">
 </head>
-<body>
+<body class="body">
     <div class="title-container">
         <img src="static/pawprint.png" alt="Dog house" class="title-image">
         <img src="static/dog-house.png" alt="Dog house" class="title-image">
@@ -16,54 +16,104 @@
     </div>
     <form id="inputForm">
         <label for="question1">What size dog are you looking for?</label>
-        <input type="text" id="question1" name="question1" required>
+        <input type="text" id="question1" name="question1" placeholder="Any, Small, Medium, Large, X-Large" required>
         
         <label for="question2">What age dog are you looking for?</label>
-        <input type="text" id="question2" name="question2" required>
+        <input type="text" id="question2" name="question2" placeholder="Any, Young, Adult, Senior, Puppy" required>
         
         <label for="question3">Where are you located?</label>
-        <input type="text" id="question3" name="question3" required>
+        <input type="text" id="question3" name="question3" placeholder="Enter your Postal Code" required>
 
-        <label for="question4">How far (in miles) are you willing to travel to retrive your dog?</label>
-        <input type="text" id="question3" name="question4" required>
+        <label for="question4">How far (in miles) are you willing to travel to retrieve your dog?</label>
+        <input type="text" id="question4" name="question4" placeholder="Enter a number" required>
 
         <label for="question5">Do you have the ability to care for a specially-abled dog?</label>
-        <input type="text" id="question3" name="question5" required>
+        <input type="text" id="question5" name="question5" placeholder="Yes or No" required>
+
+        <label for="question6">Do you have preference in gender?</label>
+        <input type="text" id="question6" name="question6" placeholder="Any, Male, or Female" required>
         
         <button type="submit">Find Your Dog</button>
     </form>
 
-
     <script>
+        const ageMapping = {
+            "any": "",
+            "young": "young",
+            "adult": "adult",
+            "senior": "senior",
+            "puppy": "puppy"
+        };
+
+        const specialNeedsMapping = {
+            "yes": 1,
+            "no": 0
+        }
+
+        const sexMapping = {
+            "any": "",
+            "male": "m",
+            "m": "m",
+            "female": "f",
+            "f": "f"
+        };
+
+        const petSizeRangeMapping = {
+            "any": "",
+            "small": 1,
+            "medium": 2,
+            "large": 3,
+            "x-large": 4
+        };
+
+        const validateInput = (input, mapping) => {
+            return mapping[input.toLowerCase()] !== undefined ? mapping[input.toLowerCase()] : null;
+        };
+
         document.getElementById('inputForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            let formData = {
-                question1: document.getElementById('question1').value,
-                question2: document.getElementById('question2').value,
-                question3: document.getElementById('question3').value
-            };
+    const size = validateInput(document.getElementById('question1').value, petSizeRangeMapping);
+    const age = validateInput(document.getElementById('question2').value, ageMapping);
+    const geoRange = document.getElementById('question4').value;
+    const special = validateInput(document.getElementById('question5').value, specialNeedsMapping);
+    const sex = validateInput(document.getElementById('question6').value, sexMapping);
 
-            fetch('/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert('Data submitted successfully!');
-                    document.getElementById('inputForm').reset(); 
-                } else {
-                    alert('Error submitting data.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error submitting data.');
-            });
-        });
+    if (age === null || sex === null || special === null || size === null || isNaN(geoRange) || geoRange <= 0) {
+        alert('Invalid input values. Please check your answers.');
+        return;
+    }
+
+    let formData = {
+        age: age,
+        sex: sex,
+        size: size,
+        geo_range: geoRange,
+        location: document.getElementById('question3').value,
+        special_ability: special
+    };
+    console.log(formData);
+
+    fetch('http://127.0.0.1:5000/submit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        } else {
+            console.error('Error:', data.message);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+
     </script>
 </body>
 </html>

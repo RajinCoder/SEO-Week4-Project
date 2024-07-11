@@ -6,7 +6,6 @@ import os
 load_dotenv()
 
 api_key = os.getenv('API_KEY')
-
 base_url = "https://api-staging.adoptapet.com/search/"
 
 payload={}
@@ -66,4 +65,6 @@ def chosen_post_data(pet_id):
     print("No pets by that ID")
   else:
     return chosen_pet_dictionary
-
+  
+# print(api_query_response('32703', '100', 'm', 'young', 1))
+# print(chosen_post_data('27879966'))
