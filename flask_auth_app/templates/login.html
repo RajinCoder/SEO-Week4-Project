@@ -7,14 +7,14 @@
         {{ form.email.label }}<br>
         {{ form.email(size=32) }}<br>
         {% for error in form.email.errors %}
-            <span>{{ error }}</span>
+            <span style="color: red;">{{ error }}</span><br>
         {% endfor %}
     </div>
     <div>
         {{ form.password.label }}<br>
         {{ form.password(size=32) }}<br>
         {% for error in form.password.errors %}
-            <span>{{ error }}</span>
+            <span style="color: red;">{{ error }}</span><br>
         {% endfor %}
     </div>
     <div>
@@ -24,5 +24,4 @@
         {{ form.submit() }}
     </div>
 </form>
-<p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
 {% endblock %}
