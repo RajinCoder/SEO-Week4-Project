@@ -26,7 +26,6 @@ def submit():
 @app.route('/pets')
 def pets_display():
     posts = session.get('posts', [])
-    print(posts)
     return render_template('pets_display.html', posts=posts)
 
 @app.route('/post/<int:pet_id>')
