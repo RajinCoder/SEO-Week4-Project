@@ -24,7 +24,6 @@ def index():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        # Check if username or email already exists
         existing_user = User.query.filter_by(username=form.username.data).first()
         if existing_user:
             flash('Username already exists. Please choose a different one.', 'danger')
@@ -35,7 +34,6 @@ def register():
             flash('Email address already registered. Please use a different email.', 'danger')
             return redirect(url_for('register'))
 
-        # If username and email are unique, proceed with registration
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(new_user)
@@ -43,7 +41,6 @@ def register():
         flash('Your account has been created successfully!', 'success')
         return redirect(url_for('login'))
 
-    # If form validation fails, render the registration form with error messages
     return render_template('register.html', form=form)
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -59,7 +56,6 @@ def login():
         else:
             flash('Login unsuccessful. Please check email and password.', 'danger')
 
-    # If form validation fails or login is unsuccessful, render the login form with error messages
     return render_template('login.html', form=form)
 
 @app.route("/logout")
