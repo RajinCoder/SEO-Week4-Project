@@ -18,6 +18,8 @@ def submit():
     if request.is_json:
         data = request.get_json()
         posts = api_query_response(data['location'], data['geo_range'], data['sex'], data['age'], data['special_ability'])
+        if not posts:  # Check if no posts were found
+            return jsonify({'redirect': url_for("error")}), 200
         session['posts'] = posts
         return jsonify({'redirect': url_for("pets_display")}), 200
     else:
@@ -26,6 +28,8 @@ def submit():
 @app.route('/pets')
 def pets_display():
     posts = session.get('posts', [])
+    if not posts:  # Check if no posts were found
+        return render_template('error.html')
     return render_template('pets_display.html', posts=posts)
 
 @app.route('/post/<int:pet_id>')
@@ -34,7 +38,11 @@ def post_details(pet_id):
     if post:
         return render_template('post_details.html', post=post)
     else:
-        return "Post not found", 404
+        return render_template('error.html')
+
+@app.route('/error')
+def error():
+    return render_template('error.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

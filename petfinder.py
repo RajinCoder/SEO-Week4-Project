@@ -1,11 +1,6 @@
 import requests
-from dotenv import load_dotenv
-import os
 
-
-load_dotenv()
-
-api_key = os.getenv('API_KEY')
+api_key = 'hg4nsv85lppeoqqixy3tnlt3k8lj6o0c'
 base_url = "https://api-staging.adoptapet.com/search/"
 
 payload={}

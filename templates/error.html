@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="pet-body">
+    <div class="header">
+        <a style="text-decoration: none; color: #f7a80f;" href="{{ request.url_root }}">
+            <h1>FUREVER HOME</h1>
+        </a>
+        <img src="{{ url_for('static', filename='pawprint.png') }}" alt="Pawprint" class="img-title">
+    </div>
+    <div class="post-details box">
+        <h1>NO DATA FOUND</h1>
+    </div>
+</div>
+{% endblock content %}
