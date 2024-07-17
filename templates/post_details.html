@@ -23,8 +23,44 @@
                 {% if post.act_quickly == 1 %}
                     <img src="{{ url_for('static', filename='warning.png') }}" alt="Warning">
                 {% endif %}
+                <img 
+                src="{{ url_for('static', filename='fav-icon.png') }}" 
+                alt="Favorite" 
+                class="favorite-icon" 
+                data-pet-id="{{ post.id }}" 
+                onclick="addToFavorites(this)"
+                style="width: 100px; height: 100px; padding: 10px; cursor: pointer; position: absolute; top: 160px; right: 200px;">
             </div>
         </div>
+        <style>
+            .favorite-icon:hover {
+                filter: brightness(1.2); 
+            }
+        </style>
+        <script>
+            function addToFavorites(element) {
+                const fav_petId = element.getAttribute('post.pet_id');
+                fetch('/favorite', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ fav_pet_id: fav_petId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Pet added to favorites!');
+                    } else {
+                        alert('Failed to add pet to favorites.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            }
+        </script>
         <div class="post-details-body">
             <div style="display: flex; flex-direction: column;">
                 <p>Name: {{ post.pet_name }}</p>
@@ -44,5 +80,7 @@
             </div>
         </div>
     </div>
+    </div>
 </div>
+
 {% endblock content %}
