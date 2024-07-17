@@ -42,6 +42,7 @@ def api_query_response(city_or_zip, geo_range, sex, age, special_needs):
       resulting_pets_dictionary['age'] = dictionary.get('age')
       resulting_pets_dictionary['size'] = dictionary.get('size')
       resulting_pets_dictionary['photo_link'] = dictionary.get('results_photo_url')
+      resulting_pets_dictionary['large_photo_link'] = dictionary.get('large_results_photo_url')
       resulting_pets.append(resulting_pets_dictionary)
   finally:
     return resulting_pets
