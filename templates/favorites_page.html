@@ -1,0 +1,77 @@
+{% extends "layout.html" %} {% block content %}
+<div class="pet-body">
+  <div class="header">
+    <a
+      style="text-decoration: none; color: #f7a80f"
+      href="{{ request.url_root }}"
+    >
+      <h1>FUREVER HOME</h1>
+    </a>
+    <img
+      src="{{ url_for('static', filename='pawprint.png') }}"
+      alt="Pawprint"
+      class="img-title"
+    />
+  </div>
+  <h2 class="favorites-hdr">MY FAVORITES</h2>
+  <div class="posts box">
+    {% if favorites %} {% for fav in favorites %}
+    <!-- display favorites -->
+    <div class="post">
+      <img
+        src="{{ post.photo_link }}"
+        alt="Dog Image"
+        srcset="{{ post.photo_link }} 1x, {{ post.large_photo_link }} 2x"
+      />
+      <p>Name: {{ post.pet_name }}</p>
+      <p>Primary Breed: {{ post.primary_breed }}</p>
+      <p>Secondary Breed: {{ post.secondary_breed }}</p>
+      <p>Gender: {{ post.sex }}</p>
+      <p>Age: {{ post.age }}</p>
+      <a
+        href="{{ url_for('post_details', pet_id=post.pet_id) }}"
+        class="details-button"
+        >Details</a
+      >
+      <!-- may need to add CSS so that the format b/t the two buttons is neat -->
+      <button
+        class="remove-button"
+        onclick="removeFavorite('{{ post.pet_id }}')"
+      >
+        Remove
+      </button>
+    </div>
+    {% endfor %} {% else %}
+    <p>No favorites yet.</p>
+    {% endif %}
+  </div>
+  <body>
+    <!-- needs to be modified -->
+    <script>
+      function removeFavorite(petId) {
+        // Remove the pet from the favorites list in the system
+        fetch("/remove_favorite", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ pet_id: petId }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              // Visually remove the post from the page
+              document.getElementById("post-" + petId).remove();
+            } else {
+              alert("Failed to remove favorite.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Error removing favorite.");
+          });
+      }
+    </script>
+  </body>
+</div>
+{% endblock content %}

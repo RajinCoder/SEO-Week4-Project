@@ -39,6 +39,46 @@ def post_details(pet_id):
         return render_template('post_details.html', post=post)
     else:
         return render_template('error.html')
+@app.before_request
+def ensure_favorites_in_session():
+    if 'favorites' not in session:
+        session['favorites'] = []
+
+# method is get, post, both, or none?
+@app.route('/favorites')
+def favorites_page():
+    favorites = session.get('favorites', [])
+
+    return render_template('favorites_page.html', favorites=favorites)
+
+
+@app.route('/favorite/<int:pet_id>', methods=['POST'])
+def add_favorite(pet_id):
+    # Retrieve the list of favorites from session, or initialize it if it doesn't exist
+    favorites = session.get('favorites', [])
+    
+    # Add the pet_id to the favorites list if it's not already there
+    if pet_id not in favorites:
+        favorites.append(pet_id)
+        session['favorites'] = favorites  # Update the session with the updated favorites list
+    return jsonify(status='success')
+    # return redirect(url_for('pets_display'))
+
+@app.route('/remove_favorite', methods=['POST'])
+def remove_favorite():
+    # should i be using chosen_pet_data?
+    data = request.get_json()
+    pet_id = data.get('pet_id')
+
+    # call helper
+    if remove_from_favorites(pet_id):
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False}), 400
+
+def remove_from_favorites(pet_id):
+    # remove pet from favorites logically!! (from database)
+    pass
 
 @app.route('/error')
 def error():
