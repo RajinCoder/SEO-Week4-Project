@@ -39,15 +39,16 @@ def api_query_response(species, city_or_zip, geo_range, sex, age, special_needs,
         for dictionary in list_of_pet_dictionaries:
             resulting_pets_dictionary = {}
             if not allergies or dictionary.get('primary_breed').lower() in hypo_breeds:
-              resulting_pets_dictionary['pet_id'] = dictionary.get('pet_id')
-              resulting_pets_dictionary['pet_name'] = dictionary.get('pet_name')
-              resulting_pets_dictionary['primary_breed'] = dictionary.get('primary_breed')
-              resulting_pets_dictionary['secondary_breed'] = dictionary.get('secondary_breed')
-              resulting_pets_dictionary['sex'] = dictionary.get('sex')
-              resulting_pets_dictionary['age'] = dictionary.get('age')
-              resulting_pets_dictionary['size'] = dictionary.get('size')
-              resulting_pets_dictionary['photo_link'] = dictionary.get('results_photo_url')
-              resulting_pets_dictionary['large_photo_link'] = dictionary.get('large_results_photo_url')
+                resulting_pets_dictionary['pet_id'] = dictionary.get('pet_id')
+                resulting_pets_dictionary['pet_name'] = dictionary.get('pet_name')
+                resulting_pets_dictionary['primary_breed'] = dictionary.get('primary_breed')
+                resulting_pets_dictionary['secondary_breed'] = dictionary.get('secondary_breed')
+                resulting_pets_dictionary['sex'] = dictionary.get('sex')
+                resulting_pets_dictionary['age'] = dictionary.get('age')
+                resulting_pets_dictionary['size'] = dictionary.get('size')
+                resulting_pets_dictionary['photo_link'] = dictionary.get('results_photo_url')
+                resulting_pets_dictionary['large_photo_link'] = dictionary.get('large_results_photo_url')
+                resulting_pets.append(resulting_pets_dictionary)
     finally:
         return resulting_pets
 
