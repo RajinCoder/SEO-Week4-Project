@@ -3,19 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask Auth</title>
+    <link rel="stylesheet" href="static/styles/styles.css">
+    <link rel="icon" type="image/x-icon" href="static/pawprint.png">
+    <title>{% block title %}{% endblock %}</title>
 </head>
-<body>
+<body style=''>
+    <div class="title-container">
+        <img src="static/pawprint.png" alt="Dog house" class="title-image">
+        <img src="static/dog-house.png" alt="Dog house" class="title-image">
+        <h2>FUREVER HOME</h2>
+        <img src="static/bone.png" alt="Bone" class="title-image">
+        <img src="static/bone-rotate.png" alt="Dog house" class="title-image">
+    </div>
     <div>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    <h4 class="alert alert-{{ category }}">{{ message }}</h4>
                 {% endfor %}
             {% endif %}
         {% endwith %}
     </div>
-    <div>
+    <div  class = "centered-form">
         {% block content %}{% endblock %}
     </div>
 </body>
