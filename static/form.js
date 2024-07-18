@@ -49,9 +49,9 @@ document.getElementById('inputForm').addEventListener('submit', function(event) 
     const activity_level = document.getElementById('question7').value;
     const attention = document.getElementById('question8').value;
 
-    const size = validateInput(figureSize(housing), petSizeRangeMapping);
-    const age = figureAge(attention);
     const species = figureSpecies(housing, activity_level, attention, allergies);
+    const size = validateInput(figureSize(housing), petSizeRangeMapping);
+    const age = figureAge(attention, species);
     console.log('Species:', species);
     console.log('Size:', size);
     console.log('Age:', age);
@@ -94,7 +94,10 @@ document.getElementById('inputForm').addEventListener('submit', function(event) 
     });
 });
 
-
+const getRandomElement = (array) => {
+    const randomIndex = Math.floor(Math.random() * array.length);
+    return array[randomIndex];
+};
 
 /**
  * Determines the size of the pet based on potential housing.
@@ -116,15 +119,22 @@ const figureSize = (housing) => {
 /**
  * Determines recommended age for pet based on desired attention requirements.
  * @param {*} attention the level of attention required
+ * @param {*} species the species of the animal
  * @returns a string representing the age of the pet
  */
-const figureAge = (attention) => {
+const figureAge = (attention, species) => {
     if (attention.toLowerCase() == 'low') {
-        return "adult";
+        return getRandomElement(['adult', 'senior']);
     } else if (attention.toLowerCase() == 'high') {
-        return "puppy";
+        if (species.toLowerCase() == 'dog') {
+            return "puppy";
+        } else if (species.toLowerCase() == 'cat') {
+            return "kitten";
+        } else {
+            return "young";
+        }
     } else if (attention.toLowerCase() == 'moderate') {
-        return "young";
+        return getRandomElement(['adult', 'young']);
     } else {
         return null; // Invalid attention input
     }
@@ -165,20 +175,20 @@ const figureSpecies = (housing, activity_level, attention, allergies) => {
 
     if (housing.toLowerCase() === 'apartment') {
         speciesWeights.dog -= 1; // Less favorable for large dogs
-    } else if (housing.toLowerCase() === 'house') {
-        speciesWeights.dog += 1;
     }
 
     if (attention.toLowerCase() == 'low') {
-        speciesWeights.cat += 2;
-        speciesWeights.bird += 1; 
-    } else if (attention.toLowerCase() == 'high') {
-        speciesWeights.dog += 2; 
-        speciesWeights.rabbit += 1;
+        speciesWeights.cat += 1;
+        speciesWeights.bird += 2; 
     } else if (attention.toLowerCase() == 'moderate'){
         speciesWeights.rabbit += 2;
         speciesWeights.cat += 2;
         speciesWeights.bird += 1; 
+    } else if (attention.toLowerCase() == 'high') {
+        speciesWeights.dog += 2; 
+        speciesWeights.rabbit += 1.5;
+        speciesWeights.bird += 1;
+        speciesWeights.cat += 1.5;
     }
 
     if (activity_level.toLowerCase() === 'low') {
@@ -187,12 +197,13 @@ const figureSpecies = (housing, activity_level, attention, allergies) => {
     } else if (activity_level.toLowerCase() === 'moderate') {
         speciesWeights.rabbit += 2;
         speciesWeights.dog += 1;
-        speciesWeights.cat += 1;
+        speciesWeights.cat += 1.5;
         speciesWeights.bird += 1; 
     } else if (activity_level.toLowerCase() === 'high'){
-        speciesWeights.dog += 3;
-        speciesWeights.rabbit += 1;
+        speciesWeights.dog += 2;
+        speciesWeights.rabbit += 1.5;
         speciesWeights.cat += 1;
+        speciesWeights.bird += 1; 
     }
 
     return Object.keys(speciesWeights).reduce((a, b) => speciesWeights[a] > speciesWeights[b] ? a : b);

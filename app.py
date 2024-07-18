@@ -17,6 +17,7 @@ def index():
 def submit():
     if request.is_json:
         data = request.get_json()
+        print(data)
         posts = api_query_response(data['species'], data['location'], data['geo_range'], data['sex'], data['age'], data['special_ability'], data['size'], data['allergies'])
         if not posts:  # Check if no posts were found
             return jsonify({'redirect': url_for("error")}), 200

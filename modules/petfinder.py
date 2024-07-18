@@ -38,8 +38,6 @@ def api_query_response(species, city_or_zip, geo_range, sex, age, special_needs,
     else:
         for dictionary in list_of_pet_dictionaries:
             resulting_pets_dictionary = {}
-            print(dictionary.get('primary_breed').lower())
-            print(dictionary.get('primary_breed').lower() in hypo_breeds)
             if not allergies or dictionary.get('primary_breed').lower() in hypo_breeds:
                 resulting_pets_dictionary['pet_id'] = dictionary.get('pet_id')
                 resulting_pets_dictionary['pet_name'] = dictionary.get('pet_name')
@@ -53,7 +51,7 @@ def api_query_response(species, city_or_zip, geo_range, sex, age, special_needs,
     finally:
         return resulting_pets
 
-#print(api_query_response('rabbit', '32703', '100', '', '', '0', '', True))
+#print(api_query_response('rabbit', '32703', '100', '', 'young', '0', '', False))
 
 """
  Returns data about a specific dog by their pet_id
