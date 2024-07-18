@@ -7,7 +7,7 @@ import requests
 # Add the parent directory to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from petfinder import api_query_response, chosen_post_data
+from modules.petfinder import api_query_response, chosen_post_data
 
 class ApiTests(unittest.TestCase):
     def setUp(self):
