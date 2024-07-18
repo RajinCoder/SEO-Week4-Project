@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, url_for, redirect, session
 from flask_cors import CORS, cross_origin
-from petfinder import api_query_response, chosen_post_data
+from modules.petfinder import api_query_response, chosen_post_data
 import os
 
 app = Flask(__name__)
@@ -17,7 +17,8 @@ def index():
 def submit():
     if request.is_json:
         data = request.get_json()
-        posts = api_query_response(data['location'], data['geo_range'], data['sex'], data['age'], data['special_ability'])
+        print(data)
+        posts = api_query_response(data['species'], data['location'], data['geo_range'], data['sex'], data['age'], data['special_ability'], data['size'], data['allergies'])
         if not posts:  # Check if no posts were found
             return jsonify({'redirect': url_for("error")}), 200
         session['posts'] = posts
