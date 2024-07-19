@@ -17,26 +17,26 @@
   <div class="posts box">
     {% if favorites %} {% for fav in favorites %}
     <!-- display favorites -->
-    <div class="post">
+    <div id="post-{{ fav.pet_id }}" class="post">
       <img
-        src="{{ post.photo_link }}"
+        src="{{ fav.photo_link }}"
         alt="Dog Image"
-        srcset="{{ post.photo_link }} 1x, {{ post.large_photo_link }} 2x"
+        srcset="{{ fav.photo_link }} 1x, {{ fav.large_photo_link }} 2x"
       />
-      <p>Name: {{ post.pet_name }}</p>
-      <p>Primary Breed: {{ post.primary_breed }}</p>
-      <p>Secondary Breed: {{ post.secondary_breed }}</p>
-      <p>Gender: {{ post.sex }}</p>
-      <p>Age: {{ post.age }}</p>
+      <p>Name: {{ fav.pet_name }}</p>
+      <p>Primary Breed: {{ fav.primary_breed }}</p>
+      <p>Secondary Breed: {{ fav.secondary_breed }}</p>
+      <p>Gender: {{ fav.sex }}</p>
+      <p>Age: {{ fav.age }}</p>
       <a
-        href="{{ url_for('post_details', pet_id=post.pet_id) }}"
+        href="{{ url_for('post_details', pet_id=fav.pet_id) }}"
         class="details-button"
         >Details</a
       >
       <!-- may need to add CSS so that the format b/t the two buttons is neat -->
       <button
         class="remove-button"
-        onclick="removeFavorite('{{ post.pet_id }}')"
+        onclick="removeFavorite('{{ fav.pet_id }}')"
       >
         Remove
       </button>

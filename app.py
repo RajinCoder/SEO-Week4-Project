@@ -48,19 +48,21 @@ def ensure_favorites_in_session():
 @app.route('/favorites')
 def favorites_page():
     favorites = session.get('favorites', [])
-
     return render_template('favorites_page.html', favorites=favorites)
 
 
 @app.route('/favorite/<int:pet_id>', methods=['POST'])
 def add_favorite(pet_id):
     # Retrieve the list of favorites from session, or initialize it if it doesn't exist
+    print(f"Received request to add pet_id: {pet_id}")
     favorites = session.get('favorites', [])
     
     # Add the pet_id to the favorites list if it's not already there
     if pet_id not in favorites:
         favorites.append(pet_id)
         session['favorites'] = favorites  # Update the session with the updated favorites list
+    print(f"Updated favorites list: {session['favorites']}")
+
     return jsonify(status='success')
     # return redirect(url_for('pets_display'))
 
