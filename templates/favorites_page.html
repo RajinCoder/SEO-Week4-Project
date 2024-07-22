@@ -15,28 +15,26 @@
   </div>
   <h2 class="favorites-hdr">MY FAVORITES</h2>
   <div class="posts box">
-    {% if favorites %} {% for fav in favorites %}
-    <!-- display favorites -->
-    <div id="post-{{ fav.pet_id }}" class="post">
+    {% if favorites %} {% for pet_id, pet_details in favorites.items() %}
+    <div id="post-{{ pet_details.pet_id }}" class="post">
       <img
-        src="{{ fav.photo_link }}"
+        src="{{ pet_details.photo_link }}"
         alt="Dog Image"
-        srcset="{{ fav.photo_link }} 1x, {{ fav.large_photo_link }} 2x"
+        srcset="{{ pet_details.photo_link }} 1x, {{ pet_details.large_photo_link }} 2x"
       />
-      <p>Name: {{ fav.pet_name }}</p>
-      <p>Primary Breed: {{ fav.primary_breed }}</p>
-      <p>Secondary Breed: {{ fav.secondary_breed }}</p>
-      <p>Gender: {{ fav.sex }}</p>
-      <p>Age: {{ fav.age }}</p>
+      <p>Name: {{ pet_details.name }}</p>
+      <p>Primary Breed: {{ pet_details.primary_breed }}</p>
+      <p>Secondary Breed: {{ pet_details.secondary_breed }}</p>
+      <p>Gender: {{ pet_details.sex }}</p>
+      <p>Age: {{ pet_details.age }}</p>
       <a
-        href="{{ url_for('post_details', pet_id=fav.pet_id) }}"
+        href="{{ url_for('post_details', pet_id=pet_details.pet_id) }}"
         class="details-button"
         >Details</a
       >
-      <!-- may need to add CSS so that the format b/t the two buttons is neat -->
       <button
         class="remove-button"
-        onclick="removeFavorite('{{ fav.pet_id }}')"
+        onclick="removeFavorite('{{ pet_details.pet_id }}')"
       >
         Remove
       </button>
@@ -45,33 +43,28 @@
     <p>No favorites yet.</p>
     {% endif %}
   </div>
-  <body>
-    <!-- needs to be modified -->
-    <script>
-      function removeFavorite(petId) {
-        // Remove the pet from the favorites list in the system
-        fetch("/remove_favorite", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ pet_id: petId }),
+  <script>
+    function removeFavorite(petId) {
+      fetch("/remove_favorite", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pet_id: petId }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            document.getElementById("post-" + petId).remove();
+          } else {
+            alert("Failed to remove favorite.");
+          }
         })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.success) {
-              // Visually remove the post from the page
-              document.getElementById("post-" + petId).remove();
-            } else {
-              alert("Failed to remove favorite.");
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            alert("Error removing favorite.");
-          });
-      }
-    </script>
-  </body>
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Error removing favorite.");
+        });
+    }
+  </script>
 </div>
 {% endblock content %}

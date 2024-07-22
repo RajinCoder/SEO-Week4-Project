@@ -49,6 +49,13 @@
           alt="Favorite"
           class="favorite-icon"
           data-pet-id="{{ post.pet_id }}"
+          data-name="{{ post.pet_name }}"
+          data-primary-breed="{{ post.primary_breed }}"
+          data-secondary-breed="{{ post.secondary_breed }}"
+          data-sex="{{ post.sex }}"
+          data-age="{{ post.age }}"
+          data-photo-link="{{ post.photo_link }}"
+          data-large-photo-link="{{ post.large_photo_link }}"
           onclick="addToFavorites(this)"
           style="
             width: 100px;
@@ -74,13 +81,43 @@
         // const petIdFromUrl = urlParts[urlParts.length - 1];
         const fav_petId = element.getAttribute("data-pet-id");
         console.log("Pet ID:", fav_petId);
+
+        const pname = element.getAttribute("data-name");
+        const ppbreed = element.getAttribute("data-primary-breed");
+        const psbreed = element.getAttribute("data-second-breed");
+        const psex = element.getAttribute("data-sex");
+        const page = element.getAttribute("data-age");
+        const pphoto = element.getAttribute("data-photo-link");
+        const plphoto = element.getAttribute("data-large-photo-link");
+
+        console.log("Pet Details:", {
+          fav_petId,
+          pname,
+          ppbreed,
+          psbreed,
+          psex,
+          page,
+          pphoto,
+          plphoto,
+        });
+
+        const petDetails = {
+          pet_id: fav_petId,
+          name: pname,
+          primary_breed: ppbreed,
+          secondary_breed: psbreed,
+          sex: psex,
+          age: page,
+          photo: pphoto,
+          large_photo: plphoto,
+        };
         // edited to use pet id to match flask routing in app
         fetch(`/favorite/${fav_petId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ pet_id: fav_petId }),
+          body: JSON.stringify({ pet_id: fav_petId, pet_details: petDetails }),
           // JSON.stringify({ pet_id: fav_petId })
         })
           .then((response) => response.json())
