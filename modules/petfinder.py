@@ -52,7 +52,8 @@ def api_query_response(species, city_or_zip, geo_range, sex, age, special_needs,
     finally:
         return resulting_pets
 
-#print(api_query_response('rabbit', '32703', '100', '', 'young', '0', '', False))
+# Should say to try another prompt
+#print(api_query_response('bird', '32703', '30', 'f', 'adult', '0', '1', False))
 
 """
  Returns data about a specific dog by their pet_id

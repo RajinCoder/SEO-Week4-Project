@@ -1,40 +1,46 @@
-{% extends "layout.html" %} {% block content %}
-<div class="pet-body">
-  <div class="header">
-    <a
-      style="text-decoration: none; color: #f7a80f"
-      href="{{ request.url_root }}"
-    >
-      <h1>FUREVER HOME</h1>
-    </a>
-    <img
-      src="{{ url_for('static', filename='pawprint.png') }}"
-      alt="Pawprint"
-      class="img-title"
-    />
-  </div>
-  <div class="posts box">
-    {% if posts %} {% for post in posts %}
-    <div class="post">
-      <img
-        src="{{ post.photo_link }}"
-        alt="Dog Image"
-        srcset="{{ post.photo_link }} 1x, {{ post.large_photo_link }} 2x"
-      />
-      <p>Name: {{ post.pet_name }}</p>
-      <p>Primary Breed: {{ post.primary_breed }}</p>
-      <p>Secondary Breed: {{ post.secondary_breed }}</p>
-      <p>Gender: {{ post.sex }}</p>
-      <p>Age: {{ post.age }}</p>
+{% extends "layout.html" %}
+{% block content %}
+
+<div id="main-content">
+  <div class="pet-body">
+    <div class="header">
       <a
-        href="{{ url_for('post_details', pet_id=post.pet_id) }}"
-        class="details-button"
-        >Details</a
+        style="text-decoration: none; color: #f7a80f"
+        href="{{ request.url_root }}"
       >
+        <h1>FUREVER HOME</h1>
+      </a>
+      <img
+        src="{{ url_for('static', filename='pawprint.png') }}"
+        alt="Pawprint"
+        class="img-title"
+      />
     </div>
-    {% endfor %} {% else %}
-    <p>No posts available.</p>
-    {% endif %}
+    <div class="posts box">
+      {% if posts %}
+      {% for post in posts %}
+      <div class="post">
+        <img
+          src="{{ post.photo_link }}"
+          alt="Dog Image"
+          srcset="{{ post.photo_link }} 1x, {{ post.large_photo_link }} 2x"
+        />
+        <p>Name: {{ post.pet_name }}</p>
+        <p>Primary Breed: {{ post.primary_breed }}</p>
+        <p>Secondary Breed: {{ post.secondary_breed }}</p>
+        <p>Gender: {{ post.sex }}</p>
+        <p>Age: {{ post.age }}</p>
+        <a
+          href="{{ url_for('post_details', pet_id=post.pet_id) }}"
+          class="details-button"
+          >Details</a
+        >
+      </div>
+      {% endfor %}
+      {% else %}
+      <p>No posts available.</p>
+      {% endif %}
+    </div>
   </div>
 </div>
 {% endblock content %}

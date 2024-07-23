@@ -1,0 +1,189 @@
+{% extends "layout.html" %} 
+{% block content %}
+<style>
+  .paw-print {
+    position: absolute;
+    left: 40%;
+    width: 100px;
+    animation: rotate .7s linear infinite;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .centered-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  #main-content {
+    margin: 3% 20%;
+    padding: 10px;
+    font-size: 1.5em;
+    font-family: "Jua", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .arrow-box {
+    margin-top: 13%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #f7a80f;
+  }
+
+  .content {
+    position: absolute;
+    bottom: -100px; /* Initially hidden below the viewport */
+    background-color: white;
+    transition: all .3s ease-out;
+  }
+
+  .show-content {
+    bottom: 0; /* Adjusted to ensure it slides up into view */
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
+    z-index: 999;
+  }
+
+  .overlay.show {
+    opacity: 1;
+  }
+</style>
+
+
+<div id="paw-container" class="centered-container">
+  <img
+    id="paw-print"
+    src="{{ url_for('static', filename='pawprint.png') }}"
+    alt="Pawprint"
+    class="paw-print"
+  />
+  <p id="paw-quote" style="margin-top: 150px;">placeholder</p>
+</div>
+
+<!-- -->
+
+<div id="main-content" class="hidden">
+    <div class="flex">
+      <h3>Based on your responses we believe these categories are your best fit when looking for your future pet.</h3>
+      <h3>
+        Species: {{ species }}
+      </h3>
+      <h3>
+        Age: {{ age }}
+      </h3>
+      <h3>
+        Size: {{ size }}
+      </h3>
+    </div>
+    <div class="arrow-box">
+      <h3>Click to see results</h3>
+      <a
+      href="{{ url_for('pets_display', posts=posts) }}"
+      >
+        <img
+        src="{{ url_for('static', filename='down-arrow.png') }}"
+        alt="Down Arrow"
+        class="arrow-title"
+        />
+      </a>
+    </div>
+ </div>
+
+ <!-- -->
+ <div class="content">
+ </div>
+
+ <script>
+  const petAdoptionQuotes = [
+    "Saving one dog will not change the world, but surely for that one dog, the world will change forever. — Karen Davison",
+    "Adopting one animal won't change the world, but it will change the world for that one animal. — Unknown",
+    "Pets are humanizing. They remind us we have an obligation and responsibility to preserve and nurture and care for all life. — James Cromwell",
+    "The greatness of a nation and its moral progress can be judged by the way its animals are treated. — Mahatma Gandhi",
+    "Until one has loved an animal, a part of one's soul remains unawakened. — Anatole France",
+    "A dog is the only thing on earth that loves you more than he loves himself. — Josh Billings",
+    "The bond with a true dog is as lasting as the ties of this earth will ever be. — Konrad Lorenz",
+    "Animals are such agreeable friends—they ask no questions; they pass no criticisms. — George Eliot",
+    "Dogs are not our whole life, but they make our lives whole. — Roger Caras",
+    "The best therapist has fur and four legs. — Unknown",
+    "Whoever said you can’t buy happiness forgot little puppies. — Gene Hill",
+    "Adopt a pet, save a life, make a friend. — Unknown",
+    "Rescue is my favorite breed. — Unknown",
+    "Life is better with a dog. — Unknown",
+    "Shelter animals aren't broken. They've simply experienced more life than other animals. If they were human, we would call them wise. — Unknown"
+  ];
+
+  function getRandomQuote() {
+    const randomIndex = Math.floor(Math.random() * petAdoptionQuotes.length);
+    return petAdoptionQuotes[randomIndex];
+  }
+
+  function replaceQuote() {
+    const pawQuote = document.getElementById('paw-quote');
+    const quote = getRandomQuote();
+    pawQuote.innerHTML = quote;
+  }
+
+  setInterval(replaceQuote, 2000);
+
+  setTimeout(() => {
+    document.getElementById('paw-container').classList.add('hidden');
+    document.getElementById('main-content').classList.remove('hidden');
+    document.getElementById('main-content').classList.add('flex');
+  }, 4000);
+
+  replaceQuote();
+
+  document.querySelector('.arrow-box a').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default action
+    document.querySelector('.content').classList.add('show-content');
+
+    // Show the overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    document.body.appendChild(overlay);
+    
+    // Trigger the overlay animation
+    setTimeout(() => {
+      overlay.classList.add('show');
+      
+      setTimeout(() => {
+        window.location.href = "{{ url_for('pets_display', posts=posts) }}";
+      }, 1000); // Match this delay with the overlay animation duration
+    }, 10); // Short delay to ensure the overlay is added before animation starts
+  });
+</script>
+
+{% endblock content %}
