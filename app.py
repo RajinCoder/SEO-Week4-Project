@@ -25,7 +25,6 @@ def submit():
         session['species'] = data['species']
         session['age'] = data['age']
         session['size'] = data['size']
-        print(f'Size1: {data['size']}')
         return jsonify({'redirect': url_for("load_info")}), 200
     else:
         return jsonify({'message': 'Invalid data format.'}), 400
