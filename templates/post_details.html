@@ -7,41 +7,65 @@
         </a>
         <img src="{{ url_for('static', filename='pawprint.png') }}" alt="Pawprint" class="img-title">
     </div>
-    <div class="post-details box">
-        <div class="post-details-head">
-            {% if post.images and post.images[0] %}
-                <img src="{{ post.images[0].thumbnail_url }}" alt="Dog Image">
-            {% else %}
-                <img src="{{ url_for('static', filename='default_image.png') }}" alt="Default Image">
-            {% endif %}
-            <div style="display: flex; align-items: center; width: 30%;">
-                {% if post.status == 'available' %}
-                    <a href="{{ post.pet_details_url }}" target="_blank" class="avail-button">Available</a>
+    <div style="display: flex; padding: 0 20px 0 10px;">
+        <div class="image-sidebar left">
+            <img src="{{ url_for('static', filename='bone.png') }}" alt="Bone" class="img-title">
+            <img src="{{ url_for('static', filename='fish.png') }}" alt="Fish" class="img-title">
+            <img src="{{ url_for('static', filename='carrot.png') }}" alt="Carrot" class="img-title">
+            <img src="{{ url_for('static', filename='worm.png') }}" alt="Worm" class="img-title">
+        </div>
+        <div class="post-details box">
+            <div class="post-details-head">
+                {% if post.images and post.images[0] %}
+                    <img src="{{ post.images[0].original_url }}" alt="Dog Image">
                 {% else %}
-                    <a href="{{ post.pet_details_url }}" target="_blank" class="avail-button">Not Available</a>
+                    {% if post.species == 'Dog'%}
+                        <img src="{{ url_for('static', filename='default_dog.png') }}" alt="Default Image">
+                    {% elif post.species == 'Cat'%}
+                        <img src="{{ url_for('static', filename='default_cat.png') }}" alt="Default Image">
+                    {% elif post.species == 'Rabbit'%}
+                        <img src="{{ url_for('static', filename='default_rabbit.png') }}" alt="Default Image">
+                    {% elif post.species == 'Bird'%}
+                        <img src="{{ url_for('static', filename='default_bird.png') }}" alt="Default Image">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='default_image.png') }}" alt="Default Image">
+                    {% endif %}
                 {% endif %}
-                {% if post.act_quickly == 1 %}
-                    <img src="{{ url_for('static', filename='warning.png') }}" alt="Warning">
-                {% endif %}
+                <div style="display: flex; align-items: center; width: 30%;">
+                    {% if post.status == 'available' %}
+                        <a href="{{ post.pet_details_url }}" target="_blank" class="avail-button">Available</a>
+                    {% else %}
+                        <a href="{{ post.pet_details_url }}" target="_blank" class="avail-button">Not Available</a>
+                    {% endif %}
+                    {% if post.act_quickly == 1 %}
+                        <img src="{{ url_for('static', filename='warning.png') }}" alt="Warning">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="post-details-body">
+                <div style="display: flex; flex-direction: column;">
+                    <p>Name: {{ post.pet_name }}</p>
+                    <p>Size: {{ post.size }}</p>
+                    <p>Sex: {{ post.sex }}</p>
+                    <p>Age: {{ post.age }}</p>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <p>Location: {{ post.addr_city }}, {{ post.addr_state_code }}</p>
+                    <p>Primary Breed: {{ post.primary_breed }}</p>
+                    <p>Secondary Breed: {{ post.secondary_breed }}</p>
+                    {% if post.special_needs == 1 %}
+                        <p>Has Special Needs</p>
+                    {% else %}
+                        <p>Does not have Special Needs</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
-        <div class="post-details-body">
-            <div style="display: flex; flex-direction: column;">
-                <p>Name: {{ post.pet_name }}</p>
-                <p>Size: {{ post.size }}</p>
-                <p>Sex: {{ post.sex }}</p>
-                <p>Age: {{ post.age }}</p>
-            </div>
-            <div style="display: flex; flex-direction: column;">
-                <p>Location: {{ post.addr_city }}, {{ post.addr_state_code }}</p>
-                <p>Primary Breed: {{ post.primary_breed }}</p>
-                <p>Secondary Breed: {{ post.secondary_breed }}</p>
-                {% if post.special_needs == 1 %}
-                    <p>Has Special Needs</p>
-                {% else %}
-                    <p>Does not have Special Needs</p>
-                {% endif %}
-            </div>
+        <div class="image-sidebar right">
+            <img src="{{ url_for('static', filename='bone.png') }}" alt="Bone" class="img-title">
+            <img src="{{ url_for('static', filename='fish.png') }}" alt="Fish" class="img-title">
+            <img src="{{ url_for('static', filename='carrot.png') }}" alt="Carrot" class="img-title">
+            <img src="{{ url_for('static', filename='worm.png') }}" alt="Worm" class="img-title">
         </div>
     </div>
 </div>

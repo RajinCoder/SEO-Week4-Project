@@ -22,14 +22,38 @@ def submit():
         if not posts:  # Check if no posts were found
             return jsonify({'redirect': url_for("error")}), 200
         session['posts'] = posts
-        return jsonify({'redirect': url_for("pets_display")}), 200
+        session['species'] = data['species']
+        session['age'] = data['age']
+        session['size'] = data['size']
+        print(f'Size1: {data['size']}')
+        return jsonify({'redirect': url_for("load_info")}), 200
     else:
         return jsonify({'message': 'Invalid data format.'}), 400
+
+@app.route('/search-info')
+def load_info():
+    posts = session.get('posts', [])
+    species = session.get('species', '').capitalize()
+    age = session.get('age', '').capitalize()
+    size = session.get('size', '')
+    if size == 1:
+        size = "Small 25 lbs (11 kg) or less"
+    elif size == 2:
+        size = "Med. 26-60 lbs (12-27 kg)"
+    elif size == 3:
+        size = "Large 61-100 lbs (28-45 kg)"
+    elif size == 4:
+        size = "X-Large 101 lbs (46 kg) or more"
+    else:
+        size = "Any"
+    if not posts:
+        return render_template('error.html')
+    return render_template('search_info.html', species=species, age=age, size=size)
 
 @app.route('/pets')
 def pets_display():
     posts = session.get('posts', [])
-    if not posts:  # Check if no posts were found
+    if not posts:
         return render_template('error.html')
     return render_template('pets_display.html', posts=posts)
 
