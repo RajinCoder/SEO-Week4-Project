@@ -14,6 +14,7 @@
     />
   </div>
   <h2 class="favorites-hdr">MY FAVORITES</h2>
+  <br />
   <div class="posts box">
     {% if favorites %} {% for pet_id, pet_details in favorites.items() %}
     <div class="post-favorites">
@@ -40,28 +41,5 @@
     <p>No favorites yet.</p>
     {% endif %}
   </div>
-  <script>
-    function removeFavorite(petId) {
-      fetch("/remove_favorite", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ pet_id: petId }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            document.getElementById("post-" + petId).remove();
-          } else {
-            alert("Failed to remove favorite.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("Error removing favorite.");
-        });
-    }
-  </script>
 </div>
 {% endblock content %}

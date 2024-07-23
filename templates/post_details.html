@@ -43,7 +43,31 @@
           src="{{ url_for('static', filename='warning.png') }}"
           alt="Warning"
         />
-        {% endif %}
+        {% endif %} {% if is_favorited %}
+        <img
+          src="{{ url_for('static', filename='unfav-icon.png') }}"
+          alt="Unfavorite"
+          class="favorite-icon"
+          data-pet-id="{{ post.pet_id }}"
+          data-name="{{ post.pet_name }}"
+          data-primary-breed="{{ post.primary_breed }}"
+          data-secondary-breed="{{ post.secondary_breed }}"
+          data-sex="{{ post.sex }}"
+          data-age="{{ post.age }}"
+          data-photo-link="{{ post.images[0].thumbnail_url }}"
+          data-large-photo-link="{{ post.large_photo_link }}"
+          onclick="removeFromFavorites(this)"
+          style="
+            width: 100px;
+            height: 100px;
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 160px;
+            right: 200px;
+          "
+        />
+        {% else %}
         <img
           src="{{ url_for('static', filename='fav-icon.png') }}"
           alt="Favorite"
@@ -67,6 +91,7 @@
             right: 200px;
           "
         />
+        {% endif %}
       </div>
     </div>
     <style>
@@ -132,6 +157,33 @@
           .catch((error) => {
             console.error("Error:", error);
             alert("An error occurred. Please try again.");
+          });
+      }
+      function removeFromFavorites(element) {
+        const faved_petID = element.getAttribute("data-pet-id");
+        // remember that icon does not update automatically for favorite->unfavorite
+        // need to update that, maybe location.reload()
+
+        console.log("Pet ID to delete:", faved_petID);
+        fetch(`/favorite/${faved_petID}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ pet_id: faved_petID }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              alert("Pet removed from favorites");
+              // document.getElementById("post-" + petId).remove();
+            } else {
+              alert("Failed to remove favorite.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Error removing favorite.");
           });
       }
     </script>
