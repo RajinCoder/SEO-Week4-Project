@@ -13,7 +13,7 @@
       class="img-title"
     />
   </div>
-  <div style="display: flex; padding: 0 20px 0 10px">
+  <div style="display: flex; padding: 0 20px 0 10px; gap: 20px">
     <div class="image-sidebar left">
       <img
         src="{{ url_for('static', filename='bone.png') }}"
@@ -194,7 +194,10 @@
           photo: pphoto,
           large_photo: plphoto,
         };
-
+        console.log(JSON.stringify({
+          pet_id: fav_petId,
+          pet_details: petDetails,
+        }))
         fetch(`/favorite/${fav_petId}`, {
           method: "POST",
           headers: {
@@ -205,6 +208,7 @@
             pet_details: petDetails,
           }),
           // JSON.stringify({ pet_id: fav_petId })
+
         })
           .then((response) => response.json())
           .then((data) => {

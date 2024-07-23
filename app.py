@@ -1,16 +1,35 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect, session
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
+from forms import RegistrationForm, LoginForm
+from models import db, User, login_manager
+from flask_bcrypt import Bcrypt
+from flask_login import login_user, current_user, logout_user, login_required
 from flask_cors import CORS, cross_origin
 from modules.petfinder import api_query_response, chosen_post_data
 import os
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
+app.config.from_object('config.Config')
+
+db.init_app(app)
+login_manager.init_app(app)
+bcrypt = Bcrypt(app)
 
 app.secret_key = os.urandom(24)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+with app.app_context():
+    db.create_all()
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if current_user.is_authenticated:
+        return render_template('index.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/submit', methods=['POST'])
 @cross_origin()
@@ -52,7 +71,7 @@ def load_info():
 @app.route('/pets')
 def pets_display():
     posts = session.get('posts', [])
-    if not posts:
+    if not posts: 
         return render_template('error.html')
     return render_template('pets_display.html', posts=posts)
 
@@ -93,7 +112,7 @@ def add_favorite(pet_id):
 
     print("Pet ID from JSON:", petID)
     print("Pet Details from JSON:", pet_details)
-    
+
     # favorites = session.get('favorites', [])
 
 
@@ -104,18 +123,18 @@ def add_favorite(pet_id):
 
     if petID in session['favorites']:
         return jsonify(status='Already in favorites')
-    
+
     session['favorites'][petID] = pet_details
     session.modified = True
 
     # for favorite in session['favorites']:
     #     if favorite['pet_id'] == pet_data['pet_id']:
     #         return jsonify(status='already_exists')
-    
+
     # session['favorites'].append(pet_data)
 
     # session['favorites'][pet_id] = pet_details
-    
+
     # Add the pet_id to the favorites list if it's not already there
     # if pet_id not in favorites:
     #     favorites.append(pet_id)
@@ -157,9 +176,54 @@ def remove_favorite(pet_id):
 #     # remove pet from favorites logically!! (from database)
 #     pass
 
+
+
 @app.route('/error')
 def error():
     return render_template('error.html')
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        existing_user = User.query.filter_by(username=form.username.data).first()
+        if existing_user:
+            flash('Username already exists. Please choose a different one.', 'danger')
+            return redirect(url_for('register'))
+        
+        existing_email = User.query.filter_by(email=form.email.data).first()
+        if existing_email:
+            flash('Email address already registered. Please use a different email.', 'danger')
+            return redirect(url_for('register'))
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Your account has been created successfully!', 'success')
+        return redirect(url_for('login'))
+
+    return render_template('register.html', form=form)
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Check if user exists
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            session['id'] = user.id
+            login_user(user, remember=form.remember.data)
+            flash('Login successful!', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash('Login unsuccessful. Please check email and password.', 'danger')
+
+    return render_template('login.html', form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

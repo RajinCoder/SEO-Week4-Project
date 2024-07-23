@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles/styles.css">
+    <link rel="icon" type="image/x-icon" href="static/pawprint.png">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body class="body">
+<div class="header">
+    <a style="text-decoration: none; color: #f7a80f;" href="http://localhost:5000/">
+        <h1>FUREVER HOME</h1>
+    </a>
+    <img src="/static/pawprint.png" alt="Pawprint" class="img-title">
+</div>
+    <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <h4 class="alert alert-{{ category }}">{{ message }}</h4>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div  class = "centered-form">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
