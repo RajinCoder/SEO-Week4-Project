@@ -23,6 +23,13 @@ h2 {
   padding: 0 40px;
 }
 
+.favorites-hdr {
+  text-align: center;
+  color: #f7a80f;
+  padding: 0 40px;
+  font-size: 2em;
+}
+
 .title-container {
   display: flex;
   align-items: center;
@@ -117,6 +124,24 @@ h2 {
   max-width: 100%;
 }
 
+.post-favorites {
+  width: 20vw;
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid #f7a80f;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f6f6f6;
+}
+
+.post-favorites img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
 .img-title {
   height: 100%; /* Make the image take up the full height of the flex container */
   max-height: 50px; /* Optionally set a max height if needed */
@@ -131,6 +156,18 @@ h2 {
   color: white;
   text-decoration: none;
   border-radius: 5px;
+  font-size: 1.5em;
+}
+
+.remove-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #f7a80f;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.5em;
 }
 
 .details-button:hover {
