@@ -80,7 +80,6 @@ def register():
         if existing_email:
             flash('Email address already registered. Please use a different email.', 'danger')
             return redirect(url_for('register'))
-
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(new_user)
@@ -97,6 +96,7 @@ def login():
         # Check if user exists
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
+            session['id'] = user.id
             login_user(user, remember=form.remember.data)
             flash('Login successful!', 'success')
             return redirect(url_for('index'))

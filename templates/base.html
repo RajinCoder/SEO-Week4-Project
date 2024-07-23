@@ -8,13 +8,12 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body style=''>
-    <div class="title-container">
-        <img src="static/pawprint.png" alt="Dog house" class="title-image">
-        <img src="static/dog-house.png" alt="Dog house" class="title-image">
-        <h2>FUREVER HOME</h2>
-        <img src="static/bone.png" alt="Bone" class="title-image">
-        <img src="static/bone-rotate.png" alt="Dog house" class="title-image">
-    </div>
+<div class="header">
+    <a style="text-decoration: none; color: #f7a80f;" href="http://localhost:5000/">
+        <h1>FUREVER HOME</h1>
+    </a>
+    <img src="/static/pawprint.png" alt="Pawprint" class="img-title">
+</div>
     <div>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}

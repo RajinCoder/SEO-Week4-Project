@@ -2,7 +2,7 @@
 {% block title %}Register{% endblock %}
 {% block content %}
 <h3>Register</h2>
-<form method="POST">
+<form method="POST" id="register-form">
     {{ form.hidden_tag() }}
     <div>
         {{ form.username.label }}
