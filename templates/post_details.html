@@ -87,6 +87,66 @@
         {% endif %}
       </div>
     </div>
+    <div style="display: flex; padding: 0 20px 0 10px;">
+        <div class="image-sidebar left">
+            <img src="{{ url_for('static', filename='bone.png') }}" alt="Bone" class="img-title">
+            <img src="{{ url_for('static', filename='fish.png') }}" alt="Fish" class="img-title">
+            <img src="{{ url_for('static', filename='carrot.png') }}" alt="Carrot" class="img-title">
+            <img src="{{ url_for('static', filename='worm.png') }}" alt="Worm" class="img-title">
+        </div>
+        <div class="post-details box">
+            <div class="post-details-head">
+                {% if post.images and post.images[0] %}
+                    <img src="{{ post.images[0].original_url }}" alt="Dog Image">
+                {% else %}
+                    {% if post.species == 'Dog'%}
+                        <img src="{{ url_for('static', filename='default_dog.png') }}" alt="Default Image">
+                    {% elif post.species == 'Cat'%}
+                        <img src="{{ url_for('static', filename='default_cat.png') }}" alt="Default Image">
+                    {% elif post.species == 'Rabbit'%}
+                        <img src="{{ url_for('static', filename='default_rabbit.png') }}" alt="Default Image">
+                    {% elif post.species == 'Bird'%}
+                        <img src="{{ url_for('static', filename='default_bird.png') }}" alt="Default Image">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='default_image.png') }}" alt="Default Image">
+                    {% endif %}
+                {% endif %}
+                <div style="display: flex; align-items: center; width: 30%;">
+                    {% if post.status == 'available' %}
+                        <a href="{{ post.pet_details_url }}" target="_blank" class="avail-button">Available</a>
+                    {% else %}
+                        <a href="{{ post.pet_details_url }}" target="_blank" class="avail-button">Not Available</a>
+                    {% endif %}
+                    {% if post.act_quickly == 1 %}
+                        <img src="{{ url_for('static', filename='warning.png') }}" alt="Warning">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="post-details-body">
+                <div style="display: flex; flex-direction: column;">
+                    <p>Name: {{ post.pet_name }}</p>
+                    <p>Size: {{ post.size }}</p>
+                    <p>Sex: {{ post.sex }}</p>
+                    <p>Age: {{ post.age }}</p>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <p>Location: {{ post.addr_city }}, {{ post.addr_state_code }}</p>
+                    <p>Primary Breed: {{ post.primary_breed }}</p>
+                    <p>Secondary Breed: {{ post.secondary_breed }}</p>
+                    {% if post.special_needs == 1 %}
+                        <p>Has Special Needs</p>
+                    {% else %}
+                        <p>Does not have Special Needs</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="image-sidebar right">
+            <img src="{{ url_for('static', filename='bone.png') }}" alt="Bone" class="img-title">
+            <img src="{{ url_for('static', filename='fish.png') }}" alt="Fish" class="img-title">
+            <img src="{{ url_for('static', filename='carrot.png') }}" alt="Carrot" class="img-title">
+            <img src="{{ url_for('static', filename='worm.png') }}" alt="Worm" class="img-title">
+        </div>
     <style>
       .favorite-icon:hover {
         filter: brightness(1.2);
@@ -94,9 +154,6 @@
     </style>
     <script>
       function addToFavorites(element) {
-        // if instead get id from url
-        // const urlParts = window.location.pathname.split('/');
-        // const petIdFromUrl = urlParts[urlParts.length - 1];
         const fav_petId = element.getAttribute("data-pet-id");
         console.log("Pet ID:", fav_petId);
 
@@ -107,18 +164,6 @@
         const page = element.getAttribute("data-age");
         const pphoto = element.getAttribute("data-photo-link");
         const plphoto = element.getAttribute("data-large-photo-link");
-        // why won't photo and large photo get extracted properly? always null
-
-        console.log("Pet Details:", {
-          fav_petId,
-          pname,
-          ppbreed,
-          psbreed,
-          psex,
-          page,
-          pphoto,
-          plphoto,
-        });
 
         const petDetails = {
           pet_id: fav_petId,
@@ -130,7 +175,7 @@
           photo: pphoto,
           large_photo: plphoto,
         };
-        // edited to use pet id to match flask routing in app
+        
         fetch(`/favorite/${fav_petId}`, {
           method: "POST",
           headers: {
@@ -144,14 +189,6 @@
             if (data.status === "success") {
               alert("Pet added to favorites!");
               location.reload();
-              // trying to have image change immediately
-              // element.src =
-              //   "{{ url_for('static', filename='unfav-icon.png') }}";
-              // not working
-              // element.src = "/static/unfav-icon.png";
-              // element.onClick = function () {
-              //   removeFromFavorites(element);
-              // };
             } else {
               alert("Failed to add pet to favorites.");
             }
@@ -163,10 +200,7 @@
       }
       function removeFromFavorites(element) {
         const faved_petID = element.getAttribute("data-pet-id");
-        // remember that icon does not update automatically for favorite->unfavorite
-        // need to update that, maybe location.reload()
 
-        console.log("Pet ID to delete:", faved_petID);
         fetch(`/favorite/${faved_petID}`, {
           method: "DELETE",
           headers: {
@@ -179,13 +213,6 @@
             if (data.status === "success") {
               alert("Pet removed from favorites");
               location.reload();
-              // element.src = "{{ url_for('static', filename='fav-icon.png') }}";
-              // this literally won't work
-              // element.src = "/static/fav-icon.png";
-              // element.onclick = function () {
-              //   addToFavorites(element);
-              // };
-              // document.getElementById("post-" + petId).remove();
             } else {
               alert("Failed to remove favorite.");
             }
