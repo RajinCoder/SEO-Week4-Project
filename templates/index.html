@@ -3,118 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FUREVER HOME</title>
+    <title>Furever Home</title>
     <link rel="icon" type="image/x-icon" href="static/pawprint.png">
     <link rel="stylesheet" href="static/styles/styles.css">
 </head>
 <body class="body">
-    <div class="title-container">
-        <img src="static/pawprint.png" alt="Dog house" class="title-image">
-        <img src="static/dog-house.png" alt="Dog house" class="title-image">
-        <h2>FUREVER HOME</h2>
-        <img src="static/bone.png" alt="Bone" class="title-image">
-        <img src="static/bone-rotate.png" alt="Dog house" class="title-image">
-    </div>
-    <form id="inputForm">
-        <label for="question1">What size dog are you looking for?</label>
-        <input type="text" id="question1" name="question1" placeholder="Any, Small, Medium, Large, X-Large" required>
-        
-        <label for="question2">What age dog are you looking for?</label>
-        <input type="text" id="question2" name="question2" placeholder="Any, Young, Adult, Senior, Puppy" required>
-        
-        <label for="question3">Where are you located?</label>
-        <input type="text" id="question3" name="question3" placeholder="Enter your Postal Code" required>
+<div class="title-container">
+    <img src="static/pawprint.png" alt="Dog house" class="title-image">
+    <img src="static/dog-house.png" alt="Dog house" class="title-image">
+    <h2>FUREVER HOME</h2>
+    <img src="static/bone.png" alt="Bone" class="title-image">
+    <img src="static/bone-rotate.png" alt="Dog house" class="title-image">
+</div>
+<form id="inputForm">
+    <label for="question1">Where are you located?</label>
+    <input type="text" id="question1" name="question1" placeholder="Enter your Postal Code" required>
 
-        <label for="question4">How far (in miles) are you willing to travel to retrieve your dog?</label>
-        <input type="text" id="question4" name="question4" placeholder="Enter a number" required>
+    <label for="question2">How far (in miles) are you willing to travel to retrieve your pet?</label>
+    <input type="text" id="question2" name="question2" placeholder="Enter a number" required>
 
-        <label for="question5">Do you have the ability to care for a specially-abled dog?</label>
-        <input type="text" id="question5" name="question5" placeholder="Yes or No" required>
+    <label for="question3">Do you have the ability to care for a specially-abled pet?</label>
+    <input type="text" id="question3" name="question3" placeholder="Yes or No" required>
 
-        <label for="question6">Do you have preference in gender?</label>
-        <input type="text" id="question6" name="question6" placeholder="Any, Male, or Female" required>
-        
-        <button type="submit">Find Your Dog</button>
-    </form>
+    <label for="question4">Do you have preference in gender?</label>
+    <input type="text" id="question4" name="question4" placeholder="Any, Male, or Female" required>
 
-    <script>
-        const ageMapping = {
-            "any": "",
-            "young": "young",
-            "adult": "adult",
-            "senior": "senior",
-            "puppy": "puppy"
-        };
+    <label for="question5">Do you live in an apartment or house?</label>
+    <input type="text" id="question5" name="question5" placeholder="Apartment or House" required>
 
-        const specialNeedsMapping = {
-            "yes": 1,
-            "no": 0
-        }
+    <label for="question6">Do you have any allergies?</label>
+    <input type="text" id="question6" name="question6" placeholder="Yes or No" required>
 
-        const sexMapping = {
-            "any": "",
-            "male": "m",
-            "m": "m",
-            "female": "f",
-            "f": "f"
-        };
+    <label for="question7">What level of activity can you manage?</label>
+    <input type="text" id="question7" name="question7" placeholder="Low, Moderate, High" required>
 
-        const petSizeRangeMapping = {
-            "any": "",
-            "small": 1,
-            "medium": 2,
-            "large": 3,
-            "x-large": 4
-        };
+    <label for="question8">How much attention could you provide your pet with?</label>
+    <input type="text" id="question8" name="question8" placeholder="Low, Moderate, High" required>
 
-        const validateInput = (input, mapping) => {
-            return mapping[input.toLowerCase()] !== undefined ? mapping[input.toLowerCase()] : null;
-        };
+    <button type="submit">Find Your Pet</button>
+</form>
 
-        document.getElementById('inputForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const size = validateInput(document.getElementById('question1').value, petSizeRangeMapping);
-    const age = validateInput(document.getElementById('question2').value, ageMapping);
-    const geoRange = document.getElementById('question4').value;
-    const special = validateInput(document.getElementById('question5').value, specialNeedsMapping);
-    const sex = validateInput(document.getElementById('question6').value, sexMapping);
-
-    if (age === null || sex === null || special === null || size === null || isNaN(geoRange) || geoRange <= 0) {
-        alert('Invalid input values. Please check your answers.');
-        return;
-    }
-
-    let formData = {
-        age: age,
-        sex: sex,
-        size: size,
-        geo_range: geoRange,
-        location: document.getElementById('question3').value,
-        special_ability: special
-    };
-    console.log(formData);
-
-    fetch('/submit', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.redirect) {
-            window.location.href = data.redirect;
-        } else {
-            console.error('Error:', data.message);
-        }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-});
-
-    </script>
+<script src="static/form.js">
+</script>
 </body>
 </html>
