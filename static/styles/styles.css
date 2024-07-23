@@ -37,7 +37,7 @@ h2 {
   margin-bottom: 20px;
 }
 
-.pet-body {
+.pet-body, .error-body {
   font-family: "Jua", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -224,4 +224,47 @@ button {
 button:hover {
   background-color: #f7a80f;
   color: white;
+}
+
+.error-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #f7a80f;
+  font-size: 60px;
+  margin-top: 140px;
+}
+
+.error-div > div {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+}
+
+.error-div > div > h1, .error-div  > p {
+  margin: 0px;
+}
+
+.error-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.error-div.post-details {
+  margin-top: 0px;
+  font-size: 40px;
+}
+
+.error-div > p {
+  font-size: 30px;
+}
+
+.error-div.post-details > div > img {
+  height: 80px !important;
+}
+
+.error-div.post-details > p {
+  font-size: 23px;
 }
