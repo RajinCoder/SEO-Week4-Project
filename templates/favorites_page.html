@@ -16,28 +16,31 @@
   <h2 class="favorites-hdr">MY FAVORITES</h2>
   <div class="posts box">
     {% if favorites %} {% for pet_id, pet_details in favorites.items() %}
-    <div id="post-{{ pet_details.pet_id }}" class="post">
+    <div class="post-favorites">
       <img
-        src="{{ pet_details.photo_link }}"
+        src="{{ pet_details.photo }}"
         alt="Dog Image"
-        srcset="{{ pet_details.photo_link }} 1x, {{ pet_details.large_photo_link }} 2x"
+        srcset="{{ pet_details.photo }} 1x, {{ pet_details.large_photo }} 2x"
       />
+      <!-- ^^^ trouble with getting pictures -->
       <p>Name: {{ pet_details.name }}</p>
       <p>Primary Breed: {{ pet_details.primary_breed }}</p>
       <p>Secondary Breed: {{ pet_details.secondary_breed }}</p>
       <p>Gender: {{ pet_details.sex }}</p>
       <p>Age: {{ pet_details.age }}</p>
-      <a
-        href="{{ url_for('post_details', pet_id=pet_details.pet_id) }}"
-        class="details-button"
-        >Details</a
-      >
-      <button
-        class="remove-button"
-        onclick="removeFavorite('{{ pet_details.pet_id }}')"
-      >
-        Remove
-      </button>
+      <div>
+        <a
+          href="{{ url_for('post_details', pet_id=pet_details.pet_id) }}"
+          class="details-button"
+          >Details</a
+        >
+        <button
+          class="remove-button"
+          onclick="removeFavorite('{{ pet_details.pet_id }}')"
+        >
+          Remove
+        </button>
+      </div>
     </div>
     {% endfor %} {% else %}
     <p>No favorites yet.</p>

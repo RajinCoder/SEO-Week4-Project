@@ -54,7 +54,7 @@
           data-secondary-breed="{{ post.secondary_breed }}"
           data-sex="{{ post.sex }}"
           data-age="{{ post.age }}"
-          data-photo-link="{{ post.photo_link }}"
+          data-photo-link="{{ post.images[0].thumbnail_url }}"
           data-large-photo-link="{{ post.large_photo_link }}"
           onclick="addToFavorites(this)"
           style="
@@ -89,6 +89,7 @@
         const page = element.getAttribute("data-age");
         const pphoto = element.getAttribute("data-photo-link");
         const plphoto = element.getAttribute("data-large-photo-link");
+        // why won't photo and large photo get extracted properly? always null
 
         console.log("Pet Details:", {
           fav_petId,
