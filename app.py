@@ -37,7 +37,9 @@ def pets_display():
 def post_details(pet_id):
     post = chosen_post_data(pet_id)
     if post:
-        return render_template('post_details.html', post=post)
+        favorites = session.get('favorites', {})
+        is_favorited = str(pet_id) in favorites
+        return render_template('post_details.html', post=post, is_favorited=is_favorited)
     else:
         return render_template('error.html')
 @app.before_request
@@ -101,21 +103,36 @@ def add_favorite(pet_id):
     return jsonify(status='success')
     # return redirect(url_for('pets_display'))
 
-@app.route('/remove_favorite', methods=['POST'])
-def remove_favorite():
+@app.route('/favorite/<int:pet_id>', methods=['DELETE'])
+def remove_favorite(pet_id):
     # should i be using chosen_pet_data?
     data = request.get_json()
-    pet_id = data.get('pet_id')
+    petID = data.get('pet_id')
 
-    # call helper
-    if remove_from_favorites(pet_id):
-        return jsonify({'success': True})
-    else:
-        return jsonify({'success': False}), 400
 
-def remove_from_favorites(pet_id):
-    # remove pet from favorites logically!! (from database)
-    pass
+    if 'favorites' not in session:
+        session['favorites'] = {}
+        print("no favorites yet")
+        return jsonify(status='No favorites yet.')
+
+    elif petID not in session['favorites']:
+        print("current favorites:", session['favorites'])
+        return jsonify(status='Post not in favorites.')
+
+    del session['favorites'][petID]
+    session.modified = True
+
+    print("Updated favorites in session:", session['favorites'])
+    return jsonify(status='success')
+    # # call helper
+    # if remove_from_favorites(pet_id):
+    #     return jsonify({'success': True})
+    # else:
+    #     return jsonify({'success': False}), 400
+
+# def remove_from_favorites(pet_id):
+#     # remove pet from favorites logically!! (from database)
+#     pass
 
 @app.route('/error')
 def error():
