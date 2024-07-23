@@ -49,13 +49,6 @@
           alt="Unfavorite"
           class="favorite-icon"
           data-pet-id="{{ post.pet_id }}"
-          data-name="{{ post.pet_name }}"
-          data-primary-breed="{{ post.primary_breed }}"
-          data-secondary-breed="{{ post.secondary_breed }}"
-          data-sex="{{ post.sex }}"
-          data-age="{{ post.age }}"
-          data-photo-link="{{ post.images[0].thumbnail_url }}"
-          data-large-photo-link="{{ post.large_photo_link }}"
           onclick="removeFromFavorites(this)"
           style="
             width: 100px;
@@ -150,6 +143,15 @@
           .then((data) => {
             if (data.status === "success") {
               alert("Pet added to favorites!");
+              location.reload();
+              // trying to have image change immediately
+              // element.src =
+              //   "{{ url_for('static', filename='unfav-icon.png') }}";
+              // not working
+              // element.src = "/static/unfav-icon.png";
+              // element.onClick = function () {
+              //   removeFromFavorites(element);
+              // };
             } else {
               alert("Failed to add pet to favorites.");
             }
@@ -176,6 +178,13 @@
           .then((data) => {
             if (data.status === "success") {
               alert("Pet removed from favorites");
+              location.reload();
+              // element.src = "{{ url_for('static', filename='fav-icon.png') }}";
+              // this literally won't work
+              // element.src = "/static/fav-icon.png";
+              // element.onclick = function () {
+              //   addToFavorites(element);
+              // };
               // document.getElementById("post-" + petId).remove();
             } else {
               alert("Failed to remove favorite.");
