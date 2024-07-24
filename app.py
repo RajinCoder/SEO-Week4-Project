@@ -198,5 +198,9 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('error.html', error_message=random.choice([ "Oops! This page is playing fetch and hasn't come back yet.", "Purr-haps this page wandered off chasing a mouse.", "This page is still chasing its tail.", "The cat's got this page's tongue.", "Looks like this page took a nap in the sun.", "Uh-oh! This page has gone for a walk.", "Our server took this page out for a walk.", "This page is on a squirrel chase.", "The internet ate my homework...and this page." ]))
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
