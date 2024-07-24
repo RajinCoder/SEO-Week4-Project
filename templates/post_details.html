@@ -43,28 +43,34 @@
     <div class="post-details box">
       <div class="post-details-head">
         {% if post.images and post.images[0] %}
-        <img src="{{ post.images[0].original_url }}" alt="Dog Image" />
-        {% else %} {% if post.species == 'Dog'%}
+        <img src="{{ post.images[0].original_url }}" alt="Pet Image" />
+        {% else %} {% set default_pic = '' %} {% if post.species == 'Dog'%} {%
+        set default_pic = url_for('static', filename='default_dog.webp') %}
         <img
-          src="{{ url_for('static', filename='default_dog.png') }}"
+          id="special-dog-case"
+          src="{{ url_for('static', filename='default_dog.webp') }}"
           alt="Default Image"
         />
-        {% elif post.species == 'Cat'%}
+        {% elif post.species == 'Cat'%} {% set default_pic = url_for('static',
+        filename='default_cat.png') %}
         <img
           src="{{ url_for('static', filename='default_cat.png') }}"
           alt="Default Image"
         />
-        {% elif post.species == 'Rabbit'%}
+        {% elif post.species == 'Rabbit'%} {% set default_pic =
+        url_for('static', filename='default_rabbit.png') %}
         <img
           src="{{ url_for('static', filename='default_rabbit.png') }}"
           alt="Default Image"
         />
-        {% elif post.species == 'Bird'%}
+        {% elif post.species == 'Bird'%} {% set default_pic = url_for('static',
+        filename='default_bird.png') %}
         <img
           src="{{ url_for('static', filename='default_bird.png') }}"
           alt="Default Image"
         />
-        {% else %}
+        {% else %} {% set default_pic = url_for('static',
+        filename='default_image.png') %}
         <img
           src="{{ url_for('static', filename='default_image.png') }}"
           alt="Default Image"
@@ -97,7 +103,7 @@
           data-secondary-breed="{{ post.secondary_breed }}"
           data-sex="{{ post.sex }}"
           data-age="{{ post.age }}"
-          data-photo-link="{{ post.images[0].thumbnail_url }}"
+          data-photo-link="{{ post.images[0].thumbnail_url if post.images and post.images[0] else default_pic}}"
           data-large-photo-link="{{ post.large_photo_link }}"
           onclick="addToFavorites(this)"
           style="

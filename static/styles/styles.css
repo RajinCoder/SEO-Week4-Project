@@ -253,3 +253,9 @@ button:hover {
 .nav-links a:focus {
   color: #f7a80f; /* Maintain the same color when active or focused */
 }
+
+#special-dog-case {
+  width: 20%;
+  height: auto;
+  max-width: 20%;
+}
