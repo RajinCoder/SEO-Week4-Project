@@ -1,325 +1,405 @@
-@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
 .body {
-    font-family: "Jua", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    color: #f7a80f;
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #f7a80f;
 }
 
 #paw-quote {
-    font-family: "Jua", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 h2 {
-    font-size: 3.5em;
-    margin: 0 20px;
-    padding: 0 40px;
+  font-size: 3.5em;
+  margin: 0 20px;
+  padding: 0 40px;
 }
 
 .centered-form > h3 {
-    font-size: 2.5em;
+  font-size: 2.5em;
 }
 
 h3 {
-    margin: 0 20px;
-    padding: 0 40px;
+  margin: 0 20px;
+  padding: 0 40px;
 }
 
 h4 {
-    font-size: 1.3em;
-    margin: 0 20px;
+  font-size: 1.3em;
+  margin: 0 20px;
 }
 
 .favorites-hdr {
-    text-align: center;
-    color: #f7a80f;
-    padding: 0 40px;
-    font-size: 2em;
+  text-align: center;
+  color: #f7a80f;
+  padding: 0 40px;
+  font-size: 3em;
+  font-weight: 500;
 }
 
 .title-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-
-.pet-body {
-    font-family: "Jua", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+.pet-body,
+.error-body {
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .post-details {
-    width: 80vw;
-    min-height: 60vh;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    padding: 10px;
-    border: 3px solid #f7a80f;
-    color: black;
+  width: 80vw;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 10px;
+  border: 3px solid #f7a80f;
+  color: black;
 }
 
 .post-details-head {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding-top: 10px;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 10px;
+  margin-bottom: 10px;
 }
 
 .post-details-body {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-evenly;
-    font-size: 1.4em;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1.4em;
 }
 
 .avail-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #f7a80f;
-    width: 100%;
-    color: #f7a80f;
-    text-decoration: none;
-    padding: 10px;
-    height: min-content;
-    font-size: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #f7a80f;
+  width: 100%;
+  color: #f7a80f;
+  text-decoration: none;
+  padding: 10px;
+  height: min-content;
+  font-size: 2em;
 }
 
 .avail-button:hover {
-    background-color: #f7a80f;
-    color: white;
+  background-color: #f7a80f;
+  color: white;
 }
 
 .header {
-    display: flex;
-    align-items: center; /* Align items to the center of the container */
-    margin-bottom: 20px;
-    color: #f7a80f;
-    padding: 5px;
+  display: flex;
+  align-items: center; /* Align items to the center of the container */
+  margin-bottom: 20px;
+  color: #f7a80f;
+  padding: 5px;
 }
 
 .posts {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .post {
-    width: 20vw;
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid #f7a80f;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #F6F6F6;
-    color: black;
+  width: 20vw;
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid #f7a80f;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f6f6f6;
+  color: black;
 }
 
 .image-sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .post img {
-    width: 100%; /* Make the image take up the full width of the post box */
-    height: 200px; /* Set a fixed height for uniformity */
-    object-fit: cover; /* Ensure the image covers the entire area while maintaining aspect ratio */
+  width: 100%; /* Make the image take up the full width of the post box */
+  height: 200px; /* Set a fixed height for uniformity */
+  object-fit: cover; /* Ensure the image covers the entire area while maintaining aspect ratio */
 }
 
 .post-favorites {
-    width: 20vw;
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid #f7a80f;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f6f6f6;
-    color: black;
+  width: 20vw;
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid #f7a80f;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f6f6f6;
+  color: black;
 }
 
 .post-favorites img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
 }
 
 .img-title {
-    height: 100%; /* Make the image take up the full height of the flex container */
-    max-height: 50px; /* Optionally set a max height if needed */
-    margin-left: 10px;
+  height: 100%; /* Make the image take up the full height of the flex container */
+  max-height: 50px; /* Optionally set a max height if needed */
+  margin-left: 10px;
 }
 
 .details-button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 10px;
-    background-color: #f7a80f;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #f7a80f;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
 }
 
 .details-button:hover {
-    background-color: #e6950e;
+  background-color: #e6950e;
 }
 
 .title-image {
-    width: 100px;
-    height: auto;
-    margin: 0 10px;
-    padding: 20px;
+  width: 100px;
+  height: auto;
+  margin: 0 10px;
+  padding: 20px;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 1.75em;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1.75em;
 }
 
-input[type="text"], input[type="password"],
+input[type="text"],
+input[type="password"],
 textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    font-size: 1.2em; 
-    border: 2px solid #f7a80f; 
-    border-radius: 5px; 
-    background-color: #fff7e6; 
-    color: #f7a80f; 
-    outline: none; 
-    transition: all 0.3s ease-in-out; 
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  font-size: 1.2em;
+  border: 2px solid #f7a80f;
+  border-radius: 5px;
+  background-color: #fff7e6;
+  color: #f7a80f;
+  outline: none;
+  transition: all 0.3s ease-in-out;
 }
 
-input[type="text"]:focus, input[type="password"]:focus
-textarea:focus {
-    border-color: #f7a80f;
-    box-shadow: 0 0 5px rgba(247, 168, 15, 0.5);
+input[type="text"]:focus,
+input[type="password"]:focus textarea:focus {
+  border-color: #f7a80f;
+  box-shadow: 0 0 5px rgba(247, 168, 15, 0.5);
 }
 
-
-button, input[type="submit"] {
-    font-family: "Jua", sans-serif;
-    padding: 15px 30px; 
-    background-color: white;
-    color: #f7a80f;
-    border: 2px solid #f7a80f;
-    cursor: pointer;
-    font-size: 1.5em; 
-    border-radius: 5px;
-    transition: all 0.3s ease-in-out;
-    margin-top: 10px;
+button,
+input[type="submit"] {
+  font-family: "Jua", sans-serif;
+  padding: 15px 30px;
+  background-color: white;
+  color: #f7a80f;
+  border: 2px solid #f7a80f;
+  cursor: pointer;
+  font-size: 1.5em;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  margin-top: 10px;
 }
 
-button:hover, input[type="submit"]:hover {
-    background-color: #f7a80f;
-    color: white;
+button:hover,
+input[type="submit"]:hover {
+  background-color: #f7a80f;
+  color: white;
 }
 
-.centered-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+.centered-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .centered-form input {
-    width: 380px;
+  width: 380px;
 }
 
 .centered-form div {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .remember-me {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row !important;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row !important;
 }
 
 label[for="remember"] {
-    margin: 0px;
+  margin: 0px;
 }
 
 input[type="checkbox"] {
-    appearance: none;
-    background-color: #fff;
-    margin: 0;
-    font: inherit;
-    color: currentColor;
-    width: 1.15em;
-    height: 1.15em;
-    border: 0.15em solid #f7a80f;
-    border-radius: 5px;
-    transform: translateY(-0.075em);
-    display: grid;
-    place-content: center;
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid #f7a80f;
+  border-radius: 5px;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
 }
 
 input[type="checkbox"]:focus {
-    outline: none;
+  outline: none;
 }
 
 input[type="checkbox"]::before {
-    content: "";
-    width: 0.65em;
-    height: 0.65em;
-    transform: scale(0);
-    transition: 120ms transform ease-in-out;
-    box-shadow: inset 1em 1em white;
-    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em white;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
 }
 
 .submit-div {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 input[type="checkbox"]:checked::before {
-    transform: scale(1);
+  transform: scale(1);
 }
 
 input[type="checkbox"]:not(:checked)::before {
-    transform: scale(0);
+  transform: scale(0);
 }
 
 input[type="checkbox"]:checked {
-    background-color: #f7a80f !important;
+  background-color: #f7a80f !important;
 }
 
 a:hover {
-    color: white;
-    -webkit-text-stroke-width: 0.3px;
-    -webkit-text-stroke-color: #f7a80f;
-    text-decoration: none;
+  color: white;
+  -webkit-text-stroke-width: 0.3px;
+  -webkit-text-stroke-color: #f7a80f;
+  text-decoration: none;
 }
 
 a {
-    color: #f7a80f;
-    -webkit-text-stroke-width: 0px;
+  color: #f7a80f;
+  -webkit-text-stroke-width: 0px;
 }
 
-#login-form, #register-form {
-    width: 380px;
+#login-form,
+#register-form {
+  width: 380px;
+}
+
+.error-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #f7a80f;
+  font-size: 60px;
+  margin-top: 140px;
+}
+
+.error-div > div {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+}
+
+.error-div > div > h1,
+.error-div > p {
+  margin: 0px;
+}
+
+.error-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.error-div.post-details {
+  margin-top: 0px;
+  font-size: 40px;
+}
+
+.error-div > p {
+  font-size: 30px;
+}
+
+.error-div.post-details > div > img {
+  height: 80px !important;
+}
+
+.error-div.post-details > p {
+  font-size: 23px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  margin-left: auto;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #f7a80f;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.nav-links a:hover {
+  text-decoration: none;
+}
+
+.nav-links a:visited {
+  color: #f7a80f; /* Prevent links from turning purple when visited */
+}
+
+.nav-links a:active,
+.nav-links a:focus {
+  color: #f7a80f; /* Maintain the same color when active or focused */
+}
+
+#special-dog-case {
+  width: 20%;
+  height: auto;
+  max-width: 20%;
 }
