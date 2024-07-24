@@ -27,7 +27,8 @@ h2 {
   text-align: center;
   color: #f7a80f;
   padding: 0 40px;
-  font-size: 2em;
+  font-size: 3em;
+  font-weight: 500;
 }
 
 .title-container {
@@ -224,4 +225,37 @@ button {
 button:hover {
   background-color: #f7a80f;
   color: white;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  margin-left: auto;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #f7a80f;
+  font-size: 2em;
+  font-weight: 600;
+  /* ^ doesn't seem to be taking effect */
+}
+
+.nav-links a:hover {
+  text-decoration: none;
+}
+
+.nav-links a:visited {
+  color: #f7a80f; /* Prevent links from turning purple when visited */
+}
+
+.nav-links a:active,
+.nav-links a:focus {
+  color: #f7a80f; /* Maintain the same color when active or focused */
+}
+
+#special-dog-case {
+  width: 20%;
+  height: auto;
+  max-width: 20%;
 }

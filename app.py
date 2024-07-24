@@ -70,32 +70,22 @@ def ensure_favorites_in_session():
     if 'favorites' not in session:
         session['favorites'] = {}
 
-# method is get, post, both, or none?
 @app.route('/favorites')
 def favorites_page():
-    # conflicted b/t doing list of nested dicts or dict of dict
-    # favorites = session.get('favorites', [])
     favorites = session.get('favorites', {})
     return render_template('favorites_page.html', favorites=favorites)
 
-
 @app.route('/favorite/<int:pet_id>', methods=['POST'])
 def add_favorite(pet_id):
-    #  have all pets automatically be in this large dictionary? --> waste of space
-    # would i need a database in this case?
     pet_data = request.json
 
     print("Received JSON data:", pet_data)
 
-    # maybe get instead?
     petID = pet_data['pet_id']
     pet_details = pet_data['pet_details']
 
     print("Pet ID from JSON:", petID)
     print("Pet Details from JSON:", pet_details)
-    
-    # favorites = session.get('favorites', [])
-
 
     if 'favorites' not in session:
         session['favorites'] = {}
@@ -108,30 +98,14 @@ def add_favorite(pet_id):
     session['favorites'][petID] = pet_details
     session.modified = True
 
-    # for favorite in session['favorites']:
-    #     if favorite['pet_id'] == pet_data['pet_id']:
-    #         return jsonify(status='already_exists')
-    
-    # session['favorites'].append(pet_data)
-
-    # session['favorites'][pet_id] = pet_details
-    
-    # Add the pet_id to the favorites list if it's not already there
-    # if pet_id not in favorites:
-    #     favorites.append(pet_id)
-    #     session['favorites'] = favorites  # Update the session with the updated favorites list
-    # print(f"Updated favorites list: {session['favorites']}")
     print("Updated favorites in session:", session['favorites'])
 
     return jsonify(status='success')
-    # return redirect(url_for('pets_display'))
 
 @app.route('/favorite/<int:pet_id>', methods=['DELETE'])
 def remove_favorite(pet_id):
-    # should i be using chosen_pet_data?
     data = request.get_json()
     petID = data.get('pet_id')
-
 
     if 'favorites' not in session:
         session['favorites'] = {}
@@ -147,15 +121,12 @@ def remove_favorite(pet_id):
 
     print("Updated favorites in session:", session['favorites'])
     return jsonify(status='success')
-    # # call helper
-    # if remove_from_favorites(pet_id):
-    #     return jsonify({'success': True})
-    # else:
-    #     return jsonify({'success': False}), 400
 
-# def remove_from_favorites(pet_id):
-#     # remove pet from favorites logically!! (from database)
-#     pass
+@app.route('/logout')
+def logout():
+    # logout_user()
+    # logic for logging out here
+    return redirect(url_for('index'))
 
 @app.route('/error')
 def error():

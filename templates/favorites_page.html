@@ -12,8 +12,12 @@
       alt="Pawprint"
       class="img-title"
     />
+    <div class="nav-links">
+      <a href="{{ url_for('favorites_page') }}">MY FAVORITES</a>
+      <a href="{{ url_for('logout') }}">LOG OUT</a>
+    </div>
   </div>
-  <h2 class="favorites-hdr">MY FAVORITES</h2>
+  <h2 class="favorites-hdr">My Fafurites</h2>
   <br />
   <div class="posts box">
     {% if favorites %} {% for pet_id, pet_details in favorites.items() %}
@@ -38,7 +42,7 @@
       </div>
     </div>
     {% endfor %} {% else %}
-    <p>No favorites yet.</p>
+    <p>Nothing to see here!</p>
     {% endif %}
   </div>
 </div>
