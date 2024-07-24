@@ -23,6 +23,20 @@ h2 {
   padding: 0 40px;
 }
 
+.centered-form > h3 {
+  font-size: 2.5em;
+}
+
+h3 {
+  margin: 0 20px;
+  padding: 0 40px;
+}
+
+h4 {
+  font-size: 1.3em;
+  margin: 0 20px;
+}
+
 .favorites-hdr {
   text-align: center;
   color: #f7a80f;
@@ -38,7 +52,8 @@ h2 {
   margin-bottom: 20px;
 }
 
-.pet-body, .error-body {
+.pet-body,
+.error-body {
   font-family: "Jua", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -50,8 +65,9 @@ h2 {
   display: flex;
   flex-direction: column;
   margin: auto;
-  padding: 3% 10px;
+  padding: 10px;
   border: 3px solid #f7a80f;
+  color: black;
 }
 
 .post-details-head {
@@ -80,7 +96,6 @@ h2 {
   padding: 10px;
   height: min-content;
   font-size: 2em;
-  transition: all 0.3s ease-in-out;
 }
 
 .avail-button:hover {
@@ -112,6 +127,7 @@ h2 {
   flex-direction: column;
   align-items: center;
   background-color: #f6f6f6;
+  color: black;
 }
 
 .image-sidebar {
@@ -119,10 +135,11 @@ h2 {
   flex-direction: column;
   justify-content: space-between;
 }
+
 .post img {
-  width: 100%;
-  height: auto;
-  max-width: 100%;
+  width: 100%; /* Make the image take up the full width of the post box */
+  height: 200px; /* Set a fixed height for uniformity */
+  object-fit: cover; /* Ensure the image covers the entire area while maintaining aspect ratio */
 }
 
 .post-favorites {
@@ -135,6 +152,7 @@ h2 {
   flex-direction: column;
   align-items: center;
   background-color: #f6f6f6;
+  color: black;
 }
 
 .post-favorites img {
@@ -157,18 +175,6 @@ h2 {
   color: white;
   text-decoration: none;
   border-radius: 5px;
-  font-size: 1.5em;
-}
-
-.remove-button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin-top: 10px;
-  background-color: #f7a80f;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 1.5em;
 }
 
 .details-button:hover {
@@ -189,6 +195,7 @@ label {
 }
 
 input[type="text"],
+input[type="password"],
 textarea {
   width: 100%;
   padding: 12px;
@@ -204,12 +211,13 @@ textarea {
 }
 
 input[type="text"]:focus,
-textarea:focus {
+input[type="password"]:focus textarea:focus {
   border-color: #f7a80f;
   box-shadow: 0 0 5px rgba(247, 168, 15, 0.5);
 }
 
-button {
+button,
+input[type="submit"] {
   font-family: "Jua", sans-serif;
   padding: 15px 30px;
   background-color: white;
@@ -222,12 +230,105 @@ button {
   margin-top: 10px;
 }
 
-button:hover {
+button:hover,
+input[type="submit"]:hover {
   background-color: #f7a80f;
   color: white;
 }
 
-.error-div{
+.centered-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.centered-form input {
+  width: 380px;
+}
+
+.centered-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.remember-me {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row !important;
+}
+
+label[for="remember"] {
+  margin: 0px;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid #f7a80f;
+  border-radius: 5px;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]:focus {
+  outline: none;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em white;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.submit-div {
+  display: flex;
+  justify-content: center;
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="checkbox"]:not(:checked)::before {
+  transform: scale(0);
+}
+
+input[type="checkbox"]:checked {
+  background-color: #f7a80f !important;
+}
+
+a:hover {
+  color: white;
+  -webkit-text-stroke-width: 0.3px;
+  -webkit-text-stroke-color: #f7a80f;
+  text-decoration: none;
+}
+
+a {
+  color: #f7a80f;
+  -webkit-text-stroke-width: 0px;
+}
+
+#login-form,
+#register-form {
+  width: 380px;
+}
+
+.error-div {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -244,7 +345,8 @@ button:hover {
   align-items: center;
 }
 
-.error-div > div > h1, .error-div  > p {
+.error-div > div > h1,
+.error-div > p {
   margin: 0px;
 }
 
@@ -301,4 +403,3 @@ button:hover {
   height: auto;
   max-width: 20%;
 }
-

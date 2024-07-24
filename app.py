@@ -1,4 +1,8 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect, session
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
+from forms import RegistrationForm, LoginForm
+from models import db, User, login_manager
+from flask_bcrypt import Bcrypt
+from flask_login import login_user, current_user, logout_user, login_required
 from flask_cors import CORS, cross_origin
 from modules.petfinder import api_query_response, chosen_post_data
 import os
@@ -6,12 +10,27 @@ import random
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
+app.config.from_object('config.Config')
+
+db.init_app(app)
+login_manager.init_app(app)
+bcrypt = Bcrypt(app)
 
 app.secret_key = os.urandom(24)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+with app.app_context():
+    db.create_all()
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if current_user.is_authenticated:
+        return render_template('index.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/submit', methods=['POST'])
 @cross_origin()
@@ -55,6 +74,7 @@ def pets_display():
     posts = session.get('posts', [])
     if not posts:  # Check if no posts were found
         return redirect(url_for("index"))
+        # ^ would this be error.html?
     return render_template('pets_display.html', posts=posts)
 
 @app.route('/post/<string:pet_id>')
@@ -96,7 +116,7 @@ def add_favorite(pet_id):
 
     if petID in session['favorites']:
         return jsonify(status='Already in favorites')
-    
+
     session['favorites'][petID] = pet_details
     session.modified = True
 
@@ -124,19 +144,53 @@ def remove_favorite(pet_id):
     print("Updated favorites in session:", session['favorites'])
     return jsonify(status='success')
 
-@app.route('/logout')
-def logout():
-    # logout_user()
-    # logic for logging out here
-    return redirect(url_for('index'))
 
 @app.route('/error')
 def error():
     return render_template('error.html')
 
-@app.errorhandler(404)
-def not_found(e):
-    return render_template('error.html', error_message=random.choice([ "Oops! This page is playing fetch and hasn't come back yet.", "Purr-haps this page wandered off chasing a mouse.", "This page is still chasing its tail.", "The cat's got this page's tongue.", "Looks like this page took a nap in the sun.", "Uh-oh! This page has gone for a walk.", "Our server took this page out for a walk.", "This page is on a squirrel chase.", "The internet ate my homework...and this page." ]))
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        existing_user = User.query.filter_by(username=form.username.data).first()
+        if existing_user:
+            flash('Username already exists. Please choose a different one.', 'danger')
+            return redirect(url_for('register'))
+        
+        existing_email = User.query.filter_by(email=form.email.data).first()
+        if existing_email:
+            flash('Email address already registered. Please use a different email.', 'danger')
+            return redirect(url_for('register'))
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Your account has been created successfully!', 'success')
+        return redirect(url_for('login'))
+
+    return render_template('register.html', form=form)
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Check if user exists
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            session['id'] = user.id
+            login_user(user, remember=form.remember.data)
+            flash('Login successful!', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash('Login unsuccessful. Please check email and password.', 'danger')
+
+    return render_template('login.html', form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
