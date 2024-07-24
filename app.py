@@ -18,6 +18,12 @@ bcrypt = Bcrypt(app)
 
 app.secret_key = os.urandom(24)
 
+# database stuff attempt
+# proxied = FlaskBehindProxy(app)
+# app.config['SECRET_KEY'] =
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+# db = SQLAlchemy(app)
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -180,7 +186,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             session['id'] = user.id
             login_user(user, remember=form.remember.data)
-            flash('Login successful!', 'success')
+            # flash('Login successful!', 'success')
             return redirect(url_for('index'))
         else:
             flash('Login unsuccessful. Please check email and password.', 'danger')
