@@ -103,7 +103,7 @@
           data-secondary-breed="{{ post.secondary_breed }}"
           data-sex="{{ post.sex }}"
           data-age="{{ post.age }}"
-          data-photo-link="{{ post.images[0].thumbnail_url if post.images and post.images[0] else default_pic}}"
+          data-photo-link="{{ post.images[0].original_url if post.images and post.images[0] else default_pic}}"
           data-large-photo-link="{{ post.large_photo_link }}"
           onclick="addToFavorites(this)"
           style="
